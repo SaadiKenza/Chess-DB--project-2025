@@ -2,11 +2,11 @@
 Notre projet consiste à réaliser une application de gestion des matchs d'une fédération d'échecs tout en pouvant être adaptée à toute autre fédération.
 Notre application permet de gérer les informations des joueurs, les parties, les résultats et encore d'autres aspects.
 
-## Etudiants:
+## Etudiantes:
 
--23268
+-Saadi Kenza :23268
 
--22156
+-Umme Kulsum :22156
 ## Description de la fonctionnalité supplémentaire:
 
 ## Diagramme de classes:
