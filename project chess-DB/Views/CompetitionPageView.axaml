@@ -6,7 +6,14 @@
              x:Class="project_chess_DB.Views.CompetitionPageView">
              
     <Grid RowDefinitions="Auto, *">
-
+        <Grid ColumnDefinitions="*,*">
+            <Button Grid.Column="0">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
+                    <TextBlock Text="Add a new competition" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0,30,30,10">
             <Grid ColumnDefinitions="*, Auto" Width="300" >
                 
@@ -28,11 +35,6 @@
         </StackPanel>
 
         <Grid Grid.Row="1">
-            <TextBlock Text="Ceci est la page des Joueurs" 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center"
-                       FontSize="24"
-                       Foreground="White"/>
         </Grid>
         
     </Grid>
