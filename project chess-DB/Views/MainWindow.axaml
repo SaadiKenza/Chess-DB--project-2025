@@ -26,6 +26,7 @@
                                         <ListBox.ItemTemplate>
                                                 <DataTemplate DataType="{x:Type vm:ListItemTemplate}">
                                                         <StackPanel Spacing="15" Orientation="Horizontal">
+                                                                <PathIcon Data="{Binding ListItemIcon}"></PathIcon>
                                                                 <TextBlock Text="{Binding Label}"></TextBlock>
                                                         </StackPanel>
                                                 </DataTemplate>
