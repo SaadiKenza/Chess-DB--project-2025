@@ -5,12 +5,36 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="project_chess_DB.Views.CompetitionPageView">
              
-    <Grid>
-        <TextBlock Text="Ceci est la page compétition" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"
-                   FontSize="24"
-                   Foreground="White"/>
+    <Grid RowDefinitions="Auto, *">
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0,30,30,10">
+            <Grid ColumnDefinitions="*, Auto" Width="300" >
+                
+                <TextBox Grid.Column="0" 
+                         Watermark="Search the competition..." 
+                         x:Name="txtSearch" 
+                         Height="30"
+                         CornerRadius="5 0 0 5"/>
+
+                <Button Grid.Column="1" 
+                        Height="30"
+                        CornerRadius="0 5 5 0">
+                    <PathIcon Data="{StaticResource search_icon}" 
+                              Width="15" 
+                              Height="15" 
+                              Foreground="White"/>
+                </Button>
+            </Grid>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <TextBlock Text="Ceci est la page des Joueurs" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Foreground="White"/>
+        </Grid>
+        
     </Grid>
     
 </UserControl>
