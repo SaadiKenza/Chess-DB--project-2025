@@ -8,10 +8,10 @@ public class Player
     private string country;
     private int age;
     //informations facultatives (? pour facultatifs)
-    private string? phone_number;
+    private string phone_number;
     private string? name;
     private string? last_name;
-    public Player(string username, string mail, string country, int age, string? phone_number = null, string? name = null, string? last_name = null)
+    public Player(string username, string mail, string country, int age, string phone_number, string? name = null, string? last_name = null)
     {
         this.username = username;
         this.mail = mail;
