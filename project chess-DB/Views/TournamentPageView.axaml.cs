@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace project_chess_DB.Views;
 
-public partial class CompetitionPageView : UserControl
+public partial class TournamentPageView : UserControl
 {
-    public CompetitionPageView()
+    public TournamentPageView()
     {
         InitializeComponent();
     }

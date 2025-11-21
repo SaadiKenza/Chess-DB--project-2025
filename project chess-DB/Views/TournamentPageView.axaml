@@ -3,23 +3,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="project_chess_DB.Views.CompetitionPageView">
+             x:Class="project_chess_DB.Views.TournamentPageView">
              
     <Grid RowDefinitions="Auto, *">
         <Grid ColumnDefinitions="*,*">
             <Button Grid.Column="0" VerticalAlignment="Bottom" Margin="20,550,30,10" Background="#524C42" >
                 <StackPanel Orientation="Horizontal" Spacing="10" >
                     <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
-                    <TextBlock Text="Add a new competition" VerticalAlignment="Center"/>
+                    <TextBlock Text="Add a new Tournament" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <TextBlock Text="Competition" Grid.Column="1" FontSize="25" FontWeight="SemiBold" Margin="0,70,30,10"/>
+            <TextBlock Text="Tournament" Grid.Column="1" FontSize="25" FontWeight="SemiBold" Margin="0,70,30,10"/>
         </Grid>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0,30,30,10">
             <Grid ColumnDefinitions="*, Auto" Width="300" >
                 
                 <TextBox Grid.Column="0" 
-                         Watermark="Search the competition..." 
+                         Watermark="Search the tournament..." 
                          x:Name="txtSearch" 
                          Height="30"
                          CornerRadius="5 0 0 5"

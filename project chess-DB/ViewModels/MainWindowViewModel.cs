@@ -28,7 +28,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         new ListItemTemplate(typeof(DashboardPageViewModel),"home_regular"),
         new ListItemTemplate(typeof(PlayerPageViewModel),"calendar_person_regular"),
-        new ListItemTemplate(typeof(CompetitionPageViewModel),"book_database_regular"),
+        new ListItemTemplate(typeof(TournamentPageViewModel),"book_database_regular"),
     };
     [RelayCommand]
     private void TriggerPane()
