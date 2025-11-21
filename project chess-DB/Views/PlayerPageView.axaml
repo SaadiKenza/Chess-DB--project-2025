@@ -13,10 +13,10 @@
                     <TextBlock Text="Add a new player" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <TextBlock Text="Members" Grid.Column="1" FontSize="25" FontWeight="SemiBold" Margin="0,70,30,10"/>
+            <TextBlock Text="Members" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25" FontWeight="SemiBold" Margin="0,30,30,10"/>
         </Grid>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0,30,30,10" >
-            <Grid ColumnDefinitions="*, Auto" Width="300" >
+            <Grid ColumnDefinitions="*, Auto" Width="200" >
                 
                 <TextBox Grid.Column="0" 
                          Watermark="Search player name..." 
@@ -38,8 +38,6 @@
             </Grid>
         </StackPanel>
 
-        <Grid Grid.Row="1">
-        </Grid>
         
     </Grid>
     
