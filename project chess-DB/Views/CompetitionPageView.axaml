@@ -7,8 +7,8 @@
              
     <Grid RowDefinitions="Auto, *">
         <Grid ColumnDefinitions="*,*">
-            <Button Grid.Column="0">
-                <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Grid.Column="0" VerticalAlignment="Bottom" Margin="20,550,30,10" Background="#524C42" >
+                <StackPanel Orientation="Horizontal" Spacing="10" >
                     <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
                     <TextBlock Text="Add a new competition" VerticalAlignment="Center"/>
                 </StackPanel>
