@@ -4,42 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="project_chess_DB.Views.TournamentPageView">
-             
+
     <Grid RowDefinitions="Auto, *">
-        <Grid ColumnDefinitions="*,*">
-            <Button Grid.Column="0" VerticalAlignment="Bottom" Margin="20,550,30,10" Background="#524C42" >
-                <StackPanel Orientation="Horizontal" Spacing="10" >
-                    <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
-                    <TextBlock Text="Add a new Tournament" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <TextBlock Text="Tournament" Grid.Column="1" FontSize="25" FontWeight="SemiBold" Margin="0,70,30,10"/>
-        </Grid>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0,30,30,10">
-            <Grid ColumnDefinitions="*, Auto" Width="300" >
-                
-                <TextBox Grid.Column="0" 
-                         Watermark="Search the tournament..." 
-                         x:Name="txtSearch" 
+
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,30,30,20"> 
+            
+            <TextBlock Grid.Column="0"                                  
+                       Text="Tournament"                                
+                       FontSize="25" 
+                       FontWeight="SemiBold" 
+                       VerticalAlignment="Center"
+                       Margin="20,0,0,0"/>
+
+            <Grid Grid.Column="1" ColumnDefinitions="*, Auto" Width="300">  
+                <TextBox Grid.Column="0"                    
+                         Watermark="Search the tournament..."
+                         x:Name="txtSearch"
                          Height="30"
                          CornerRadius="5 0 0 5"
-                         Background="#524C42"/>
-
-                <Button Grid.Column="1" 
-                        Height="30"
-                        CornerRadius="0 5 5 0"
-                        Background="#524C42">
-                    <PathIcon Data="{StaticResource search_icon}" 
-                              Width="15" 
-                              Height="15" 
-                              Foreground="White"/>
+                         Background="#524C42"
+                         Foreground="White"/>
+                <Button Grid.Column="1" Height="30" CornerRadius="0 5 5 0" Background="#524C42">
+                    <PathIcon Data="{StaticResource search_icon}" Width="15" Height="15" Foreground="White"/>
                 </Button>
             </Grid>
-        </StackPanel>
-
-        <Grid Grid.Row="1">
         </Grid>
-        
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto, *">                     
+
+            <StackPanel Grid.Column="0"                                    
+                        Width="250" 
+                        Margin="20,0,20,0" 
+                        Spacing="20"
+                        VerticalAlignment="Center">
+
+                <Border Background="#524C42" CornerRadius="5" Padding="10">
+                    <StackPanel Spacing="10" >
+                        <TextBlock Text="New Tournament Details" FontWeight="Bold"/>
+                        <TextBox Watermark="Name of the tournament"/>
+                        <TextBox Watermark="Country"/>
+                        <TextBox Watermark="City"/>
+                        <TextBox Watermark="Start date"/>
+                        <TextBox Watermark="End date"/>
+                    </StackPanel>
+                </Border>
+                <Button HorizontalAlignment="Stretch"                       
+                        Background="#524C42">
+                    <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                        <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
+                        <TextBlock Text="Add Tournament" VerticalAlignment="Center" Foreground="White"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <Border Grid.Column="1" 
+                    Margin="0,0,30,30" 
+                    CornerRadius="10">
+            </Border>
+        </Grid>
     </Grid>
-    
 </UserControl>
