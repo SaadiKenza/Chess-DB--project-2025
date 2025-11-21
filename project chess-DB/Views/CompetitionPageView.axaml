@@ -13,6 +13,7 @@
                     <TextBlock Text="Add a new competition" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
+            <TextBlock Text="Competition" Grid.Column="1" FontSize="25" FontWeight="SemiBold" Margin="0,70,30,10"/>
         </Grid>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0,30,30,10">
             <Grid ColumnDefinitions="*, Auto" Width="300" >
