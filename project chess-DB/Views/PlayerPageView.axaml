@@ -64,12 +64,26 @@
                                 <Setter Property="Background" Value="#524C42"/> <Setter Property="Foreground" Value="White"/>   <Setter Property="FontWeight" Value="Bold"/>    </Style>
                             </DataGrid.Styles>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Last Name"  Binding="{Binding Last_name}"/>
-                                <DataGridTextColumn Header="First Name" Binding="{Binding First_name}" />
-                                <DataGridTextColumn Header="Country"    Binding="{Binding Country}" />
-                                <DataGridTextColumn Header="Mail"       Binding="{Binding Mail}" />
-                                <DataGridTextColumn Header="Age"        Binding="{Binding Age}" />
-                                <DataGridTextColumn Header="Phone"      Binding="{Binding Phone_number}" />
+                                <DataGridTextColumn Header="Last Name"  Binding="{Binding Last_name}" Width="*"/>
+                                <DataGridTextColumn Header="First Name" Binding="{Binding First_name}" Width="*"/>
+                                <DataGridTextColumn Header="Country"    Binding="{Binding Country}" Width="*"/>
+                                <DataGridTextColumn Header="Mail"       Binding="{Binding Mail}" Width="*"/>
+                                <DataGridTextColumn Header="Age"        Binding="{Binding Age}" Width="*"/>
+                                <DataGridTextColumn Header="Phone"      Binding="{Binding Phone_number}" Width="*"/>
+                                <DataGridTemplateColumn Header="Actions">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="5,0">    
+                                                        <Button Width="30" Height="30" CornerRadius="5" Padding="0" Background="#D4AF37">
+                                                            <PathIcon Data="{StaticResource people_add_regular}" Width="14" Height="14" Foreground="White"/>
+                                                        </Button>
+                                                        <Button Width="30" Height="30" CornerRadius="5" Padding="0" Background="#B71C1C">
+                                                            <PathIcon Data="{StaticResource delete_forever_regular}" Width="14" Height="14" Foreground="White"/>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
