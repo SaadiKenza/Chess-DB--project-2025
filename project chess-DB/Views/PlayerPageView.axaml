@@ -6,39 +6,50 @@
              x:Class="project_chess_DB.Views.PlayerPageView">
 
     <Grid RowDefinitions="Auto, *">
-        <Grid ColumnDefinitions="*,*">
-            <Button Grid.Column="0" VerticalAlignment="Bottom" Margin="20,550,30,10" Background="#524C42">
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
-                    <TextBlock Text="Add a new player" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <TextBlock Text="Members" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" FontSize="25" FontWeight="SemiBold" Margin="0,30,30,10"/>
-        </Grid>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0,30,30,10" >
-            <Grid ColumnDefinitions="*, Auto" Width="200" >
-                
-                <TextBox Grid.Column="0" 
-                         Watermark="Search player name..." 
-                         x:Name="txtSearch" 
-                         Height="30"
-                         CornerRadius="5 0 0 5"
-                         Background="#524C42"/>
 
-                <Button Grid.Column="1" 
-                        Height="30"
-                        CornerRadius="0 5 5 0"
-                        Background="#524C42">
-                    <PathIcon Data="{StaticResource search_icon}" 
-                              Width="15" 
-                              Height="15" 
-                              Foreground="White"
-                              />
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,30,30,20">
+            <TextBlock Grid.Column="0" Text="Players" FontSize="25" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,0,0,0"/>
+            <Grid Grid.Column="1" ColumnDefinitions="*, Auto" Width="300">
+                <TextBox Grid.Column="0" Watermark="Search a player..." x:Name="txtSearch" Height="30" CornerRadius="5 0 0 5" Background="#524C42" Foreground="White"/>
+                <Button Grid.Column="1" Height="30" CornerRadius="0 5 5 0" Background="#524C42">
+                    <PathIcon Data="{StaticResource search_icon}" Width="15" Height="15" Foreground="White"/>
                 </Button>
             </Grid>
-        </StackPanel>
+        </Grid>
 
-        
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            
+            <Grid ColumnDefinitions="Auto, *">
+                
+                <StackPanel Grid.Column="0"
+                            Margin="20,0,20,50" 
+                            Spacing="20"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"> 
+
+                    <Border Width="250" HorizontalAlignment="Center" Background="#524C42" CornerRadius="5" Padding="10">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="New player Details" FontWeight="Bold"/>
+                            <TextBox Watermark="Last name"/>
+                            <TextBox Watermark="First name"/>
+                            <TextBox Watermark="age"/>
+                            <TextBox Watermark="Mail"/>
+                            <TextBox Watermark="Phone number"/>
+                            <TextBox Watermark="Country"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <Button HorizontalAlignment="Center" Background="#524C42">
+                        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                            <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
+                            <TextBlock Text="Add a player" VerticalAlignment="Center" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <Border Grid.Column="1" Margin="0,0,30,30" CornerRadius="10"/>
+                
+            </Grid>
+        </ScrollViewer>
     </Grid>
-    
 </UserControl>
