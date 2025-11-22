@@ -1,8 +1,9 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:project_chess_DB.ViewModels"
+        xmlns:vm="clr-namespace:project_chess_DB.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:project_chess_DB.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="project_chess_DB.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -10,7 +11,6 @@
         Title="project_chess_DB"
         Background="#524C42"
         ExtendClientAreaToDecorationsHint="True">
-
         <SplitView IsPaneOpen="{Binding IsPaneOpen}"
                    OpenPaneLength="300"
                    CompactPaneLength="48"

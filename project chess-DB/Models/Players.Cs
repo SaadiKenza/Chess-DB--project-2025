@@ -1,23 +1,24 @@
 using System.Runtime.InteropServices;
-
-public class Player
+namespace project_chess_DB.Models
 {
-    //informations obligatoires
-    private string mail;
-    private string country;
-    private int age;
-    //informations facultatives (? pour facultatifs)
-    private string phone_number;
-    private string name;
-    private string last_name;
-    public Player(string mail, string country, int age, string phone_number, string name , string last_name)
+    public class Player
     {
-        this.mail = mail;
-        this.country = country;
-        this.age = age;
-        this.phone_number = phone_number;
-        this.name = name;
-        this.last_name = last_name;
-    }
+        //informations obligatoires
+        public string Mail { get; set; }
+        public string Country { get; set; }
+        public string Age { get; set; }
+        public string Phone_number { get; set; }
+        public string First_name { get; set; }
+        public string Last_name { get; set; }
+        public Player(string last_name, string first_name, string country, string mail, string age, string phone_number)
+        {
+            this.Mail = mail;               //en majuscule, propriété publique et minuscule propriété temporaire
+            this.Country = country;
+            this.Age = age;
+            this.Phone_number = phone_number;
+            this.First_name = first_name;
+            this.Last_name = last_name;
+        }
 
+    }
 }
