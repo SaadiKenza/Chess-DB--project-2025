@@ -64,6 +64,7 @@
                                 <Setter Property="Background" Value="#524C42"/> <Setter Property="Foreground" Value="White"/>   <Setter Property="FontWeight" Value="Bold"/>    </Style>
                             </DataGrid.Styles>
                             <DataGrid.Columns>
+                                <DataGridTextColumn Header="Matricule"      Binding="{Binding Matricule}" Width="*"/>
                                 <DataGridTextColumn Header="Last Name"  Binding="{Binding Last_name}" Width="*"/>
                                 <DataGridTextColumn Header="First Name" Binding="{Binding First_name}" Width="*"/>
                                 <DataGridTextColumn Header="Country"    Binding="{Binding Country}" Width="*"/>

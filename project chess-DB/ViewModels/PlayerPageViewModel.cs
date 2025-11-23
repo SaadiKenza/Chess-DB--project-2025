@@ -10,8 +10,8 @@ public partial class PlayerPageViewModel : ViewModelBase
     {
         var players = new List<Player>
             {
-                new Player("Saadi", "Kenza","Belgique","23268@ecam.be","20","+32123456987"),
-                new Player("Umme", "Kulsum","Belgique","22156@ecam.be","21","+320123456879"),
+                new Player("Saadi", "Kenza","Belgique","23268@ecam.be","20","+32123456987","1"),
+                new Player("Umme", "Kulsum","Belgique","22156@ecam.be","21","+320123456879","2"),
             };
         Players = new ObservableCollection<Player>(players);
     }
