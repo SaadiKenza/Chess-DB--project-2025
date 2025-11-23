@@ -82,11 +82,12 @@
 
                     <Border Grid.Row="1" Margin="0,0,30,30" CornerRadius="10" BorderThickness="1" BorderBrush="Gray">
                         <DataGrid x:CompileBindings="False" 
-                                Height="400" 
+                                MaxHeight="700"  
                                 VerticalAlignment="Top"
                                 Margin="0" 
                                 ItemsSource="{Binding Tournaments}" 
                                 GridLinesVisibility="All"
+                                VerticalScrollBarVisibility="Visible"  
                                 >
                             <DataGrid.Styles>
                                 <Style Selector="DataGridColumnHeader">
