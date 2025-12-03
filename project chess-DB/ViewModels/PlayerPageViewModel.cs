@@ -9,11 +9,13 @@ namespace project_chess_DB.ViewModels;
 public partial class PlayerPageViewModel : ViewModelBase
 {
     public ObservableCollection<Player> Players { get; set; }
+    
     public string NewLast_name { get; set; } = string.Empty;
     public string NewFirst_name { get; set; } = string.Empty;
+    public string NewAge { get; set; } = string.Empty;
+    public string NewElo { get; set; } = string.Empty;
     public string NewCountry { get; set; } = string.Empty;
     public string NewMail { get; set; } = string.Empty;
-    public string NewAge { get; set; } = string.Empty;
     public string NewPhone_number { get; set; } = string.Empty;
     public ICommand AddPlayerCommand { get; }   //commande pour notre bouton add player
 
@@ -31,13 +33,15 @@ public partial class PlayerPageViewModel : ViewModelBase
         string matriculeGenere = GenerateMatricule();        //genere le matricule automatique
         //on crée notre nouveau joueur avec les valeurs entrées dans les textbox
         var newPlayer = new Player(
+            matriculeGenere,
             NewLast_name,
             NewFirst_name,
+            NewAge,
+            NewElo,
             NewCountry,
             NewMail,
-            NewAge,
-            NewPhone_number,
-            matriculeGenere
+            NewPhone_number
+            
         );
         Players.Add(newPlayer);
     }

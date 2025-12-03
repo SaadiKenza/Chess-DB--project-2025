@@ -11,15 +11,19 @@ namespace project_chess_DB.Models
         public string First_name { get; set; }
         public string Last_name { get; set; }
         public string Matricule { get; set; }
-        public Player(string last_name, string first_name, string country, string mail, string age, string phone_number, string matricule)
+        public string Elo { get; set; }
+        public Player(string matricule, string last_name, string first_name, string age, string elo, string country, string mail,  string phone_number )
         {
-            this.Mail = mail;               //en majuscule, propriété publique et minuscule propriété temporaire
-            this.Country = country;
-            this.Age = age;
-            this.Phone_number = phone_number;
-            this.First_name = first_name;
-            this.Last_name = last_name;
+            
             this.Matricule = matricule;
+            this.Last_name = last_name;
+            this.First_name = first_name;
+            this.Age = age;
+            this.Elo = elo;
+            this.Country = country;
+            this.Mail = mail;               //en majuscule, propriété publique et minuscule propriété temporaire
+            this.Phone_number = phone_number;
+        
         }
 
     }

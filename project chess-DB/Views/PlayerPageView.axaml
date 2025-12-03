@@ -30,6 +30,7 @@
                             <TextBox Watermark="Last name" Text="{Binding NewLast_name}"/>
                             <TextBox Watermark="First name" Text="{Binding NewFirst_name}"/>
                             <TextBox Watermark="Age" Text="{Binding NewAge}" />
+                            <TextBox Watermark="Elo" Text="{Binding NewElo}" />
                             <TextBox Watermark="Mail" Text="{Binding NewMail}"/>
                             <TextBox Watermark="Phone number" Text="{Binding NewPhone_number}"/>
                             <TextBox Watermark="Country" Text="{Binding NewCountry}"/>
@@ -67,12 +68,13 @@
                                 <Setter Property="Background" Value="#524C42"/> <Setter Property="Foreground" Value="White"/>   <Setter Property="FontWeight" Value="Bold"/>    </Style>
                             </DataGrid.Styles>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Matricule"      Binding="{Binding Matricule}" Width="*"/>
+                                <DataGridTextColumn Header="Matricule"  Binding="{Binding Matricule}" Width="*"/>
                                 <DataGridTextColumn Header="Last Name"  Binding="{Binding Last_name}" Width="*"/>
                                 <DataGridTextColumn Header="First Name" Binding="{Binding First_name}" Width="*"/>
+                                <DataGridTextColumn Header="Age"        Binding="{Binding Age}" Width="*"/>
+                                <DataGridTextColumn Header="Elo"        Binding="{Binding Elo}" Width="*"/>
                                 <DataGridTextColumn Header="Country"    Binding="{Binding Country}" Width="*"/>
                                 <DataGridTextColumn Header="Mail"       Binding="{Binding Mail}" Width="*"/>
-                                <DataGridTextColumn Header="Age"        Binding="{Binding Age}" Width="*"/>
                                 <DataGridTextColumn Header="Phone"      Binding="{Binding Phone_number}" Width="*"/>
                                 <DataGridTemplateColumn Header="Actions">
                                             <DataGridTemplateColumn.CellTemplate>
