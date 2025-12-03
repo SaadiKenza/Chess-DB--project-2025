@@ -6,11 +6,19 @@
              x:Class="project_chess_DB.Views.DashboardPageView">
              
     <Grid>
-        <TextBlock Text="Ceci est la page d'accueil" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"
-                   FontSize="24"
-                   Foreground="White"/>
+        <Grid.Background>
+            <ImageBrush Source="/Assets/black-knight-chess-icon-vector-600nw-2468279913.webp"
+                        Stretch="Uniform"
+                        Opacity="0.1"/>
+        </Grid.Background>
+
+        
+        <TextBlock Text="Bienvenue dans le gestionnaire" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                FontSize="34"
+                Foreground="White"/>
+        
     </Grid>
     
 </UserControl>
