@@ -17,6 +17,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewStart_date { get; set; } = string.Empty;
     public string NewEnd_date { get; set; } = string.Empty;
     public ICommand AddTournamentCommand { get; }
+    public ICommand DeleteTournamentCommand { get; }
     public TournamentPageViewModel()
     {
         var tournaments = new List<Tournament>
@@ -24,6 +25,7 @@ public partial class TournamentPageViewModel : ViewModelBase
         };
         Tournaments = new ObservableCollection<Tournament>(tournaments);
         AddTournamentCommand = new RelayCommand1(AddTournament);
+        DeleteTournamentCommand = new RelayCommand1(DeleteTournament);
     }
     private void AddTournament()
     {
@@ -36,14 +38,28 @@ public partial class TournamentPageViewModel : ViewModelBase
         );
         Tournaments.Add(newTournament);
     }
+    private void DeleteTournament(object? parameter)
+    {
+        if (parameter is Tournament tournamentToDelete)
+        {
+            Tournaments.Remove(tournamentToDelete);
+        }
+    }
 }
 public class RelayCommand1 : ICommand
 {
-    private readonly Action _execute;
+    private readonly Action<object?>? _executeWithParam;
+    private readonly Action? _executeNoParam;
 
-    public RelayCommand1(Action execute)
+    public RelayCommand1(Action<object?> execute)   //avec paramètre
     {
-        _execute = execute;
+        _executeWithParam = execute;
+        _executeNoParam = null;
+    }
+    public RelayCommand1(Action execute)        //code quand on veut seullement ajouter
+    {
+        _executeNoParam = execute;
+        _executeWithParam = null;
     }
 
     // Modification ici : On définit des accesseurs vides pour faire taire l'avertissement
@@ -54,6 +70,15 @@ public class RelayCommand1 : ICommand
     }
 
     public bool CanExecute(object? parameter) => true;
-
-    public void Execute(object? parameter) => _execute();
+    public void Execute(object? parameter)
+    {
+        if (_executeWithParam != null)
+        {
+            _executeWithParam(parameter);
+        }
+        else
+        {
+            _executeNoParam?.Invoke();
+        }
+    }
 }
