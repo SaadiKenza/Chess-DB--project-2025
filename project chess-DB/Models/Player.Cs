@@ -1,17 +1,18 @@
 using System.Runtime.InteropServices;
+
 namespace project_chess_DB.Models
 {
     public class Player
     {
         //informations obligatoires
-        public string Mail { get; set; }
-        public string Country { get; set; }
-        public string Age { get; set; }
-        public string Phone_number { get; set; }
-        public string First_name { get; set; }
-        public string Last_name { get; set; }
-        public string Matricule { get; set; }
-        public string Elo { get; set; }
+        public string Mail { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string Age { get; set; } = string.Empty;
+        public string Phone_number { get; set; } = string.Empty;
+        public string First_name { get; set; } = string.Empty;
+        public string Last_name { get; set; } = string.Empty;
+        public string Matricule { get; set; } 
+        public string Elo { get; set; } = string.Empty;
         public Player(string matricule, string last_name, string first_name, string age, string elo, string country, string mail,  string phone_number )
         {
             

@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System;
 using System.Linq;
+using project_chess_DB.Services;
+using Tmds.DBus.Protocol;
+
 namespace project_chess_DB.ViewModels;
 
 public partial class PlayerPageViewModel : ViewModelBase
@@ -20,19 +23,18 @@ public partial class PlayerPageViewModel : ViewModelBase
     public ICommand AddPlayerCommand { get; }   //commande pour notre bouton add player
     public ICommand DeletePlayerCommand { get; }
 
+    private PlayerRepository repository ;
     public PlayerPageViewModel()
     {
-        var players = new List<Player>
-        {
-
-        };
-        Players = new ObservableCollection<Player>(players);
+        repository = new PlayerRepository();
+        var playersFromDb = repository.GetAllPlayers();
+        Players = new ObservableCollection<Player>(playersFromDb);
         AddPlayerCommand = new RelayCommand(AddPlayer);
         DeletePlayerCommand = new RelayCommand(DeletePlayer);
     }
     private void AddPlayer()
     {
-        string matriculeGenere = GenerateMatricule();        //genere le matricule automatique
+        string matriculeGenere = GenerateMatricule(); //genere le matricule automatique
         //on crée notre nouveau joueur avec les valeurs entrées dans les textbox
         var newPlayer = new Player(
             matriculeGenere,
@@ -45,6 +47,7 @@ public partial class PlayerPageViewModel : ViewModelBase
             NewPhone_number
 
         );
+        repository.AddPlayer(newPlayer);
         Players.Add(newPlayer);
     }
     private void DeletePlayer(object? parameter)

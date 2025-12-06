@@ -6,6 +6,7 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using project_chess_DB.ViewModels;
 using project_chess_DB.Views;
+using project_chess_DB.Services;
 
 namespace project_chess_DB;
 
@@ -18,6 +19,9 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+
+        DatabaseService.Initialize();
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
