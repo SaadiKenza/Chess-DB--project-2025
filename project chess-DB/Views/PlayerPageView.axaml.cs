@@ -8,6 +8,6 @@ public partial class PlayerPageView : UserControl
     public PlayerPageView()
     {
         InitializeComponent();
-        DataContext = new PlayerPageViewModel();
+       
     }
 }
