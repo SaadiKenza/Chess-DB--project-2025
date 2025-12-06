@@ -1,16 +1,24 @@
 using System.IO;
 using Microsoft.Data.Sqlite;
-
+using System;
 namespace project_chess_DB.Services
 {
     public static class DatabaseService
     {
+        
+        private static readonly string DatabaseFolder =
+            Path.Combine(AppContext.BaseDirectory, "Data");
+
+        private static readonly string DatabasePath =
+            Path.Combine(DatabaseFolder, "chess.db");
+
+        private static readonly string ConnectionString =
+            $"Data Source={DatabasePath}";
         // Chemin de la base de données (relatif à l'exécutable)
-        private const string DatabasePath = "Data/chess.db";
+        /*private const string DatabasePath = "Data/chess.db";
         private const string DatabaseFolder = "Data";
 
-        private const string ConnectionString = "Data Source=" + DatabasePath;
-
+ */
         /// <summary>
         /// Appelé au démarrage de l'appli pour s'assurer que
         /// le dossier Data existe et que les tables existent.
