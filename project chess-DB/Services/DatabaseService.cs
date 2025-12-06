@@ -48,7 +48,7 @@ namespace project_chess_DB.Services
 
             var createTournamentsTableSql = @"
             CREATE TABLE IF NOT EXISTS Tournaments (
-                Name_of_the_tounament TEXT PRIMARY KEY,
+                Name_of_the_tournament TEXT PRIMARY KEY,
                 Country TEXT NOT NULL,
                 City TEXT NOT NULL,
                 Start_Date TEXT NOT NULL,

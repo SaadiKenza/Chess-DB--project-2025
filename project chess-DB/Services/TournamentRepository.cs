@@ -20,7 +20,7 @@ namespace project_chess_DB.Services{
             using var command2 = connection.CreateCommand();
             command2.CommandText = sql;
 
-            command2.Parameters.AddWithValue("$name_of_the_tounament", tournament.Name_of_the_tournament);
+            command2.Parameters.AddWithValue("$name_of_the_tournament", tournament.Name_of_the_tournament);
             command2.Parameters.AddWithValue("$country", tournament.Country);
             command2.Parameters.AddWithValue("$city", tournament.City);
             command2.Parameters.AddWithValue("$start_date", tournament.Start_date);
