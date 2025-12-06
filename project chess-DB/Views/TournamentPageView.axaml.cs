@@ -8,6 +8,6 @@ public partial class TournamentPageView : UserControl
     public TournamentPageView()
     {
         InitializeComponent();
-        DataContext = new TournamentPageViewModel();
+       
     }
 }

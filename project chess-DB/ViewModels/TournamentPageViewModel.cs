@@ -5,6 +5,8 @@ using System.Windows.Input;
 using System;
 using System.Linq;
 using Tmds.DBus.Protocol;
+using project_chess_DB.Services;
+
 namespace project_chess_DB.ViewModels;
 
 public partial class TournamentPageViewModel : ViewModelBase
@@ -18,15 +20,22 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewEnd_date { get; set; } = string.Empty;
     public ICommand AddTournamentCommand { get; }
     public ICommand DeleteTournamentCommand { get; }
+
+    private TournamentRepository repository;
     public TournamentPageViewModel()
-    {
-        var tournaments = new List<Tournament>
-        {
-        };
-        Tournaments = new ObservableCollection<Tournament>(tournaments);
-        AddTournamentCommand = new RelayCommand1(AddTournament);
-        DeleteTournamentCommand = new RelayCommand1(DeleteTournament);
-    }
+{
+    // Juste pour vérifier si le ViewModel est bien créé
+    //System.Diagnostics.Debug.WriteLine("✅ TournamentPageViewModel CONSTRUIT");
+
+    repository = new TournamentRepository();
+    var tournamentFromDb = repository.GetAllTournaments();
+    Tournaments = new ObservableCollection<Tournament>(tournamentFromDb);
+
+    // On garde tes commandes comme avant
+    AddTournamentCommand = new RelayCommand2(AddTournament);
+    DeleteTournamentCommand = new RelayCommand2(DeleteTournament);
+}
+
     private void AddTournament()
     {
         var newTournament = new Tournament(
@@ -36,6 +45,8 @@ public partial class TournamentPageViewModel : ViewModelBase
             NewStart_date,
             NewEnd_date
         );
+        
+        repository.AddTournament(newTournament);
         Tournaments.Add(newTournament);
     }
     private void DeleteTournament(object? parameter)
@@ -46,17 +57,17 @@ public partial class TournamentPageViewModel : ViewModelBase
         }
     }
 }
-public class RelayCommand1 : ICommand
+public class RelayCommand2 : ICommand
 {
     private readonly Action<object?>? _executeWithParam;
     private readonly Action? _executeNoParam;
 
-    public RelayCommand1(Action<object?> execute)   //avec paramètre
+    public RelayCommand2(Action<object?> execute)   //avec paramètre
     {
         _executeWithParam = execute;
         _executeNoParam = null;
     }
-    public RelayCommand1(Action execute)        //code quand on veut seullement ajouter
+    public RelayCommand2(Action execute)        //code quand on veut seullement ajouter
     {
         _executeNoParam = execute;
         _executeWithParam = null;

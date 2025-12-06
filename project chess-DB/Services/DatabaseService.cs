@@ -14,15 +14,7 @@ namespace project_chess_DB.Services
 
         private static readonly string ConnectionString =
             $"Data Source={DatabasePath}";
-        // Chemin de la base de données (relatif à l'exécutable)
-        /*private const string DatabasePath = "Data/chess.db";
-        private const string DatabaseFolder = "Data";
-
- */
-        /// <summary>
-        /// Appelé au démarrage de l'appli pour s'assurer que
-        /// le dossier Data existe et que les tables existent.
-        /// </summary>
+        
         public static void Initialize()
         {
             // 1. S'assurer que le dossier Data existe
@@ -52,12 +44,24 @@ namespace project_chess_DB.Services
                 Country TEXT,
                 Mail TEXT,
                 Phone_number TEXT
-            );
-            ";
+            );" ;
+
+            var createTournamentsTableSql = @"
+            CREATE TABLE IF NOT EXISTS Tournaments (
+                Name_of_the_tounament TEXT PRIMARY KEY,
+                Country TEXT NOT NULL,
+                City TEXT NOT NULL,
+                Start_Date TEXT NOT NULL,
+                End_Date TEXT NOT NULL
+            );";
 
             using var command = connection.CreateCommand();
             command.CommandText = createPlayersTableSql;
             command.ExecuteNonQuery();
+
+            using var command2 = connection.CreateCommand();
+            command2.CommandText = createTournamentsTableSql;
+            command2.ExecuteNonQuery();
         }
 
         /// <summary>
