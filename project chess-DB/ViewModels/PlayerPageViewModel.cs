@@ -26,11 +26,9 @@ public partial class PlayerPageViewModel : ViewModelBase
         get => _newLast_name;
         set
         {
-            // On vérifie si la valeur change pour éviter des mises à jour inutiles
             if (_newLast_name != value)
             {
                 _newLast_name = value;
-                // IMPORTANT : Ceci dit à la vue "Hey, j'ai changé, mets-toi à jour !"
                 OnPropertyChanged(nameof(NewLast_name));
                 (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
@@ -50,8 +48,6 @@ public partial class PlayerPageViewModel : ViewModelBase
             }
         }
     }
-
-    // ... Fais de même pour NewAge, NewElo, NewCountry, NewMail, NewPhone_number
     public string NewAge
     {
         get => _newAge;
@@ -77,21 +73,54 @@ public partial class PlayerPageViewModel : ViewModelBase
         get => _newPhone_number;
         set { if (_newPhone_number != value) { _newPhone_number = value; OnPropertyChanged(nameof(NewPhone_number)); (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
-    public ICommand AddPlayerCommand { get; }   //commande pour notre bouton add player
+    public ICommand AddPlayerCommand { get; }
     public ICommand DeletePlayerCommand { get; }
+    //code pour la search bar
+    private List<Player> _allPlayers;
+    private string _searchText = string.Empty;
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            if (_searchText != value)
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
 
+                FilterPlayers();
+            }
+        }
+    }
     private PlayerRepository repository;
     public PlayerPageViewModel()
     {
         repository = new PlayerRepository();
-        var playersFromDb = repository.GetAllPlayers();
-        Players = new ObservableCollection<Player>(playersFromDb);
+        _allPlayers = repository.GetAllPlayers();
+        Players = new ObservableCollection<Player>(_allPlayers);
         AddPlayerCommand = new RelayCommand(AddPlayer, CanAddPlayer);
         DeletePlayerCommand = new RelayCommand(DeletePlayer);
     }
+    private void FilterPlayers()
+    {
+        // Si la recherche est vide, on remet tout le monde
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            // On remet la liste originale
+            Players = new ObservableCollection<Player>(_allPlayers);
+        }
+        else
+        {
+            var filteredList = _allPlayers
+                .Where(p => p.Matricule != null && p.Matricule.StartsWith(SearchText))
+                .ToList();
+
+            Players = new ObservableCollection<Player>(filteredList);
+        }
+        OnPropertyChanged(nameof(Players));
+    }
     private bool CanAddPlayer()
     {
-        // On retourne VRAI seulement si AUCUN champ n'est vide ou nul
         return !string.IsNullOrWhiteSpace(NewLast_name) &&
                !string.IsNullOrWhiteSpace(NewFirst_name) &&
                !string.IsNullOrWhiteSpace(NewAge) &&
@@ -116,7 +145,8 @@ public partial class PlayerPageViewModel : ViewModelBase
 
         );
         repository.AddPlayer(newPlayer);
-        Players.Add(newPlayer);
+        _allPlayers.Add(newPlayer);
+        FilterPlayers();
         ClearForm();
 
     }
@@ -137,7 +167,8 @@ public partial class PlayerPageViewModel : ViewModelBase
             //pour supprimer dans la database
             repository.DeletePlayer(playerToDelete.Matricule);
             //supprimer dans l'UI
-            Players.Remove(playerToDelete);
+            _allPlayers.Remove(playerToDelete);
+            FilterPlayers();
         }
     }
     private void majPlayer(Player player)
