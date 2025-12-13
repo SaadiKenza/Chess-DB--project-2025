@@ -89,7 +89,7 @@
                 <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto, *">
 
                     <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Width="300" HorizontalAlignment="Center" Margin="0,0,150,10">
-                        <TextBox Grid.Column="0" Watermark="Search a tournament..." x:Name="txtSearch" Height="30" CornerRadius="5 0 0 5" Background="#524C42" Foreground="White"/>
+                        <TextBox Grid.Column="0" Watermark="Search a tournament..." x:Name="txtSearch" Text="{Binding SearchText}" Height="30" CornerRadius="5 0 0 5" Background="#524C42" Foreground="White"/>
                         <Button Grid.Column="1" Height="30" CornerRadius="0 5 5 0" Background="#524C42">
                             <PathIcon Data="{StaticResource search_icon}" Width="15" Height="15" Foreground="White"/>
                         </Button>

@@ -122,21 +122,51 @@ public partial class TournamentPageViewModel : ViewModelBase
     public ICommand AddCompetitionCommand { get; }
 
     private TournamentRepository repository;
+    private List<Tournament> _allTournaments;
+    private string _searchText = string.Empty;
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            if (_searchText != value)
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
 
+                FilterTournaments();
+            }
+        }
+    }
     public TournamentPageViewModel()
     {
         repository = new TournamentRepository();
-
-        var tournamentFromDb = repository.GetAllTournaments();
-        Tournaments = new ObservableCollection<Tournament>(tournamentFromDb);
+        _allTournaments = repository.GetAllTournaments();
+        Tournaments = new ObservableCollection<Tournament>(_allTournaments);
 
         OpenJoinTournamentCommand = ReactiveCommand.CreateFromTask<Tournament>(OpenRegistrationWindow, outputScheduler: RxApp.MainThreadScheduler);
         AddTournamentCommand = new RelayCommand2(AddTournament);
         DeleteTournamentCommand = new RelayCommand2(DeleteTournament);
         AddCompetitionCommand = new RelayCommand2(AddCompetition);
     }
+    private void FilterTournaments()
+    {
+        // Si la recherche est vide, on remet tout le monde
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            // On remet la liste originale
+            Tournaments = new ObservableCollection<Tournament>(_allTournaments);
+        }
+        else
+        {
+            var filteredList = _allTournaments
+                .Where(p => p.Name_of_the_tournament != null && p.Name_of_the_tournament.StartsWith(SearchText))
+                .ToList();
 
-    // --- METHODES ---
+            Tournaments = new ObservableCollection<Tournament>(filteredList);
+        }
+        OnPropertyChanged(nameof(Tournaments));
+    }
     private async Task OpenRegistrationWindow(Tournament tournament)
     {
         if (tournament == null) return;
@@ -171,7 +201,8 @@ public partial class TournamentPageViewModel : ViewModelBase
         );
 
         repository.AddTournament(newTournament);
-        Tournaments.Add(newTournament);
+        _allTournaments.Add(newTournament);
+        FilterTournaments();
         ClearForm();
     }
     private void ClearForm()
@@ -188,7 +219,8 @@ public partial class TournamentPageViewModel : ViewModelBase
         if (parameter is Tournament tournamentToDelete)
         {
             repository.DeleteTournament(tournamentToDelete.Name_of_the_tournament);
-            Tournaments.Remove(tournamentToDelete);
+            _allTournaments.Remove(tournamentToDelete);
+            FilterTournaments();
 
             if (SelectedTournament == tournamentToDelete)
             {
