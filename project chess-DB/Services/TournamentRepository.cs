@@ -29,6 +29,16 @@ namespace project_chess_DB.Services{
 
             command2.ExecuteNonQuery();
         }
+        public void DeleteTournament (string name_of_the_tournament)
+        {
+            using var connection = DatabaseService.GetOpenConnection();
+            var sql = @"DELETE FROM Tournaments WHERE Name_of_the_tournament = $name_of_the_tournament";
+
+            using var command5 = connection.CreateCommand();
+            command5.CommandText = sql;
+            command5.Parameters.AddWithValue("$name_of_the_tournament", name_of_the_tournament);
+            command5.ExecuteNonQuery();
+        }
 
         public List<Tournament> GetAllTournaments()
         {

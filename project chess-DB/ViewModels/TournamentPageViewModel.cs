@@ -53,6 +53,9 @@ public partial class TournamentPageViewModel : ViewModelBase
     {
         if (parameter is Tournament tournamentToDelete)
         {
+            //pour supprimer dans la database
+            repository.DeleteTournament(tournamentToDelete.Name_of_the_tournament);
+            //supprimer dans l'UI
             Tournaments.Remove(tournamentToDelete);
         }
     }
