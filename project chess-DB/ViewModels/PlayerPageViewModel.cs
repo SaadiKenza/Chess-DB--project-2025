@@ -32,6 +32,7 @@ public partial class PlayerPageViewModel : ViewModelBase
                 _newLast_name = value;
                 // IMPORTANT : Ceci dit à la vue "Hey, j'ai changé, mets-toi à jour !"
                 OnPropertyChanged(nameof(NewLast_name));
+                (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
     }
@@ -45,6 +46,7 @@ public partial class PlayerPageViewModel : ViewModelBase
             {
                 _newFirst_name = value;
                 OnPropertyChanged(nameof(NewFirst_name));
+                (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
     }
@@ -53,27 +55,27 @@ public partial class PlayerPageViewModel : ViewModelBase
     public string NewAge
     {
         get => _newAge;
-        set { if (_newAge != value) { _newAge = value; OnPropertyChanged(nameof(NewAge)); } }
+        set { if (_newAge != value) { _newAge = value; OnPropertyChanged(nameof(NewAge)); (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewElo
     {
         get => _newElo;
-        set { if (_newElo != value) { _newElo = value; OnPropertyChanged(nameof(NewElo)); } }
+        set { if (_newElo != value) { _newElo = value; OnPropertyChanged(nameof(NewElo)); (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewCountry
     {
         get => _newCountry;
-        set { if (_newCountry != value) { _newCountry = value; OnPropertyChanged(nameof(NewCountry)); } }
+        set { if (_newCountry != value) { _newCountry = value; OnPropertyChanged(nameof(NewCountry)); (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewMail
     {
         get => _newMail;
-        set { if (_newMail != value) { _newMail = value; OnPropertyChanged(nameof(NewMail)); } }
+        set { if (_newMail != value) { _newMail = value; OnPropertyChanged(nameof(NewMail)); (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewPhone_number
     {
         get => _newPhone_number;
-        set { if (_newPhone_number != value) { _newPhone_number = value; OnPropertyChanged(nameof(NewPhone_number)); } }
+        set { if (_newPhone_number != value) { _newPhone_number = value; OnPropertyChanged(nameof(NewPhone_number)); (AddPlayerCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public ICommand AddPlayerCommand { get; }   //commande pour notre bouton add player
     public ICommand DeletePlayerCommand { get; }
@@ -84,8 +86,19 @@ public partial class PlayerPageViewModel : ViewModelBase
         repository = new PlayerRepository();
         var playersFromDb = repository.GetAllPlayers();
         Players = new ObservableCollection<Player>(playersFromDb);
-        AddPlayerCommand = new RelayCommand(AddPlayer);
+        AddPlayerCommand = new RelayCommand(AddPlayer, CanAddPlayer);
         DeletePlayerCommand = new RelayCommand(DeletePlayer);
+    }
+    private bool CanAddPlayer()
+    {
+        // On retourne VRAI seulement si AUCUN champ n'est vide ou nul
+        return !string.IsNullOrWhiteSpace(NewLast_name) &&
+               !string.IsNullOrWhiteSpace(NewFirst_name) &&
+               !string.IsNullOrWhiteSpace(NewAge) &&
+               !string.IsNullOrWhiteSpace(NewElo) &&
+               !string.IsNullOrWhiteSpace(NewCountry) &&
+               !string.IsNullOrWhiteSpace(NewMail) &&
+               !string.IsNullOrWhiteSpace(NewPhone_number);
     }
     private void AddPlayer()
     {
@@ -172,26 +185,28 @@ public class RelayCommand : ICommand
 {
     private readonly Action<object?>? _executeWithParam;
     private readonly Action? _executeNoParam;
-
-    public RelayCommand(Action<object?> execute)   //avec paramètre
+    private readonly Predicate<object?>? _canExecute;
+    public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
     {
         _executeWithParam = execute;
         _executeNoParam = null;
+        _canExecute = canExecute;
     }
-    public RelayCommand(Action execute)        //code quand on veut seullement ajouter
+
+    public RelayCommand(Action execute, Func<bool>? canExecute = null)
     {
         _executeNoParam = execute;
         _executeWithParam = null;
+        if (canExecute != null)
+        {
+            _canExecute = _ => canExecute();
+        }
     }
-
-    // Modification ici : On définit des accesseurs vides pour faire taire l'avertissement
-    public event EventHandler? CanExecuteChanged
+    public event EventHandler? CanExecuteChanged;
+    public bool CanExecute(object? parameter)
     {
-        add { }
-        remove { }
+        return _canExecute == null || _canExecute(parameter);
     }
-
-    public bool CanExecute(object? parameter) => true;
 
     public void Execute(object? parameter)
     {
@@ -203,5 +218,9 @@ public class RelayCommand : ICommand
         {
             _executeNoParam?.Invoke();
         }
+    }
+    public void RaiseCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }
