@@ -28,32 +28,94 @@ public partial class TournamentPageViewModel : ViewModelBase
             {
                 _selectedTournament = value;
                 OnPropertyChanged(nameof(SelectedTournament));
-                OnPropertyChanged(nameof(Competitions)); 
+                OnPropertyChanged(nameof(Competitions));
             }
         }
     }
 
-    public ObservableCollection<Competition> Competitions => 
+    public ObservableCollection<Competition> Competitions =>
         SelectedTournament?.Competitions ?? new ObservableCollection<Competition>();
 
-    public string NewName_of_the_tournament { get; set; } = string.Empty;
-    public string NewCountry { get; set; } = string.Empty;
-    public string NewCity { get; set; } = string.Empty;
-    public string NewStart_date { get; set; } = string.Empty;
-    public string NewEnd_date { get; set; } = string.Empty;
+    private string _newName_of_the_tournament { get; set; } = string.Empty;
+    private string _newCountry { get; set; } = string.Empty;
+    private string _newCity { get; set; } = string.Empty;
+    private string _newStart_date { get; set; } = string.Empty;
+    private string _newEnd_date { get; set; } = string.Empty;
+    public string NewName_of_the_tournament
+    {
+        get => _newName_of_the_tournament;
+        set { if (_newName_of_the_tournament != value) { _newName_of_the_tournament = value; OnPropertyChanged(nameof(NewName_of_the_tournament)); } }
+    }
+    public string NewCountry
+    {
+        get => _newCountry;
+        set { if (_newCountry != value) { _newCountry = value; OnPropertyChanged(nameof(NewCountry)); } }
+    }
+    public string NewCity
+    {
+        get => _newCity;
+        set { if (_newCity != value) { _newCity = value; OnPropertyChanged(nameof(NewCity)); } }
+    }
+    public string NewStart_date
+    {
+        get => _newStart_date;
+        set { if (_newStart_date != value) { _newStart_date = value; OnPropertyChanged(nameof(NewStart_date)); } }
+    }
+    public string NewEnd_date
+    {
+        get => _newEnd_date;
+        set { if (_newEnd_date != value) { _newEnd_date = value; OnPropertyChanged(nameof(NewEnd_date)); } }
+    }
 
 
-    public string NewCompetitionDate { get; set; } = string.Empty;
-    public string NewCompetitionNumber { get; set; } = string.Empty; 
-
-    public string NewP1_RegNumber { get; set; } = string.Empty;
-    public string NewP1_Result { get; set; } = string.Empty;
-    public string NewP1_Moves { get; set; } = string.Empty;
-
-    public string NewP2_RegNumber { get; set; } = string.Empty;
-    public string NewP2_Result { get; set; } = string.Empty;
-    public string NewP2_Moves { get; set; } = string.Empty;
-
+    private string _newCompetitionDate { get; set; } = string.Empty;
+    private string _newCompetitionNumber { get; set; } = string.Empty;
+    public string NewCompetitionDate
+    {
+        get => _newCompetitionDate;
+        set { if (_newCompetitionDate != value) { _newCompetitionDate = value; OnPropertyChanged(nameof(NewCompetitionDate)); } }
+    }
+    public string NewCompetitionNumber
+    {
+        get => _newCompetitionNumber;
+        set { if (_newCompetitionNumber != value) { _newCompetitionNumber = value; OnPropertyChanged(nameof(NewCompetitionNumber)); } }
+    }
+    private string _newP1_RegNumber { get; set; } = string.Empty;
+    private string _newP1_Result { get; set; } = string.Empty;
+    private string _newP1_Moves { get; set; } = string.Empty;
+    public string NewP1_RegNumber
+    {
+        get => _newP1_RegNumber;
+        set { if (_newP1_RegNumber != value) { _newP1_RegNumber = value; OnPropertyChanged(nameof(NewP1_RegNumber)); } }
+    }
+    public string NewP1_Result
+    {
+        get => _newP1_Result;
+        set { if (_newP1_Result != value) { _newP1_Result = value; OnPropertyChanged(nameof(NewP1_Result)); } }
+    }
+    public string NewP1_Moves
+    {
+        get => _newP1_Moves;
+        set { if (_newP1_Moves != value) { _newP1_Moves = value; OnPropertyChanged(nameof(NewP1_Moves)); } }
+    }
+    private string _newP2_RegNumber { get; set; } = string.Empty;
+    private string _newP2_Result { get; set; } = string.Empty;
+    private string _newP2_Moves { get; set; } = string.Empty;
+    public string NewP2_RegNumber
+    {
+        get => _newP2_RegNumber;
+        set { if (_newP2_RegNumber != value) { _newP2_RegNumber = value; OnPropertyChanged(nameof(NewP2_RegNumber)); } }
+    }
+    public string NewP2_Result
+    {
+        get => _newP2_Result;
+        set { if (_newP2_Result != value) { _newP2_Result = value; OnPropertyChanged(nameof(NewP2_Result)); } }
+    }
+    public string NewP2_Moves
+    {
+        get => _newP2_Moves;
+        set { if (_newP2_Moves != value) { _newP2_Moves = value; OnPropertyChanged(nameof(NewP2_Moves)); } }
+    }
     public ICommand AddTournamentCommand { get; }
     public ICommand DeleteTournamentCommand { get; }
     public ICommand OpenJoinTournamentCommand { get; }
@@ -64,14 +126,14 @@ public partial class TournamentPageViewModel : ViewModelBase
     public TournamentPageViewModel()
     {
         repository = new TournamentRepository();
-    
+
         var tournamentFromDb = repository.GetAllTournaments();
         Tournaments = new ObservableCollection<Tournament>(tournamentFromDb);
-        
+
         OpenJoinTournamentCommand = ReactiveCommand.CreateFromTask<Tournament>(OpenRegistrationWindow, outputScheduler: RxApp.MainThreadScheduler);
         AddTournamentCommand = new RelayCommand2(AddTournament);
         DeleteTournamentCommand = new RelayCommand2(DeleteTournament);
-        AddCompetitionCommand = new RelayCommand2(AddCompetition); 
+        AddCompetitionCommand = new RelayCommand2(AddCompetition);
     }
 
     // --- METHODES ---
@@ -110,6 +172,15 @@ public partial class TournamentPageViewModel : ViewModelBase
 
         repository.AddTournament(newTournament);
         Tournaments.Add(newTournament);
+        ClearForm();
+    }
+    private void ClearForm()
+    {
+        NewName_of_the_tournament = string.Empty;
+        NewCountry = string.Empty;
+        NewCity = string.Empty;
+        NewStart_date = string.Empty;
+        NewEnd_date = string.Empty;
     }
 
     private void DeleteTournament(object? parameter)
@@ -118,7 +189,7 @@ public partial class TournamentPageViewModel : ViewModelBase
         {
             repository.DeleteTournament(tournamentToDelete.Name_of_the_tournament);
             Tournaments.Remove(tournamentToDelete);
-            
+
             if (SelectedTournament == tournamentToDelete)
             {
                 SelectedTournament = null;
@@ -142,8 +213,24 @@ public partial class TournamentPageViewModel : ViewModelBase
         };
 
         SelectedTournament.Competitions.Add(newCompetition);
-        
+
         OnPropertyChanged(nameof(Competitions));
+        ClearCompetitionForm();
+    }
+    private void ClearCompetitionForm()
+    {
+        NewCompetitionDate = string.Empty;
+        NewCompetitionNumber = string.Empty;
+
+        // Joueur 1
+        NewP1_RegNumber = string.Empty;
+        NewP1_Result = string.Empty;
+        NewP1_Moves = string.Empty;
+
+        // Joueur 2
+        NewP2_RegNumber = string.Empty;
+        NewP2_Result = string.Empty;
+        NewP2_Moves = string.Empty;
     }
 
     private void majTournament(Tournament tournament)

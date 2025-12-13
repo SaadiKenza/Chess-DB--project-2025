@@ -53,13 +53,25 @@
                                 <StackPanel Grid.Column="0" Spacing="5">
                                     <TextBlock Text="Player 1" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
                                     <TextBox Watermark="Registration number" Text="{Binding NewP1_RegNumber}"/>
-                                    <TextBox Watermark="Result" Text="{Binding NewP1_Result}"/>
+                                    <ComboBox PlaceholderText="Result" 
+                                        SelectedItem="{Binding NewP1_Result}" 
+                                        HorizontalAlignment="Stretch">
+                                        <x:String>0</x:String>
+                                        <x:String>0.5</x:String>
+                                        <x:String>1</x:String>
+                                    </ComboBox>
                                     <TextBox Watermark="moves" Text="{Binding NewP1_Moves}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Spacing="5">
                                     <TextBlock Text="Player 2" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
                                     <TextBox Watermark="Registration number" Text="{Binding NewP2_RegNumber}"/>
-                                    <TextBox Watermark="Result" Text="{Binding NewP2_Result}"/>
+                                    <ComboBox PlaceholderText="Result" 
+                                        SelectedItem="{Binding NewP2_Result}" 
+                                        HorizontalAlignment="Stretch">
+                                        <x:String>0</x:String>
+                                        <x:String>0.5</x:String>
+                                        <x:String>1</x:String>
+                                    </ComboBox>
                                     <TextBox Watermark="moves" Text="{Binding NewP2_Moves}"/>
                                 </StackPanel>
                             </Grid>
