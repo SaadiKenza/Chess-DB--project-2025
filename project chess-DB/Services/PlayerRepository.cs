@@ -46,6 +46,33 @@ namespace project_chess_DB.Services
             command3.Parameters.AddWithValue("$matricule", matricule);
             command3.ExecuteNonQuery();
         }
+
+        //pour pouvoir modifier les coordonnées d'un player
+        public void UpdatePlayer(Player player)
+        {
+            using var connection = DatabaseService.GetOpenConnection();
+            var sql = @"UPDATE Players SET
+            Last_name = $lastName,
+            First_name = $firstName,
+            Age = $age,
+            Elo = $elo,
+            Country = $country,
+            Mail = $mail,
+            Phone_number = $phone
+            WHERE Matricule = $matricule";
+            using var command4 = connection.CreateCommand();
+            command4.CommandText = sql;
+            command4.Parameters.AddWithValue("$matricule", player.Matricule);
+            command4.Parameters.AddWithValue("$lastName", player.Last_name);
+            command4.Parameters.AddWithValue("$firstName", player.First_name);
+            command4.Parameters.AddWithValue("$age", player.Age);
+            command4.Parameters.AddWithValue("$elo", player.Elo);
+            command4.Parameters.AddWithValue("$country", player.Country);
+            command4.Parameters.AddWithValue("$mail", player.Mail);
+            command4.Parameters.AddWithValue("$phone", player.Phone_number);
+            
+            command4.ExecuteNonQuery();
+            }
         public List<Player> GetAllPlayers() //prendre tous les joueurs depuis la base
         {
             var players = new List<Player>(); //liste qui contient les player

@@ -60,6 +60,10 @@ public partial class PlayerPageViewModel : ViewModelBase
             Players.Remove(playerToDelete);
         }
     }
+    private void majPlayer(Player player)
+    {
+        repository.UpdatePlayer(player);
+    }
     private string GenerateMatricule()
     {
         // 1. On récupère l'année (ex: "25")

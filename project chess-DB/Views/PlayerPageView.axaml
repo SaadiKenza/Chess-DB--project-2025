@@ -62,6 +62,7 @@
                                 ItemsSource="{Binding Players}" 
                                 GridLinesVisibility="All"
                                 VerticalScrollBarVisibility="Visible"   
+                                CellEditEnded="DataGrid_CellEditEnded" 
                                 >
                             <DataGrid.Styles>
                                 <Style Selector="DataGridColumnHeader">
