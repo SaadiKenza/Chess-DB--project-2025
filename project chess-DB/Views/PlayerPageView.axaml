@@ -27,13 +27,13 @@
                     <Border Width="250" HorizontalAlignment="Center" Background="#524C42" CornerRadius="5" Padding="10">
                         <StackPanel Spacing="10">
                             <TextBlock Text="New player Details" FontWeight="Bold" Foreground="White"/>
-                            <TextBox Watermark="Last name" Text="{Binding NewLast_name}"/>
-                            <TextBox Watermark="First name" Text="{Binding NewFirst_name}"/>
-                            <TextBox Watermark="Age" Text="{Binding NewAge}" />
-                            <TextBox Watermark="Elo" Text="{Binding NewElo}" />
+                            <TextBox x:Name="TxtLastname" Watermark="Last name" Text="{Binding NewLast_name}"/>
+                            <TextBox x:Name="TxtFirstname" Watermark="First name" Text="{Binding NewFirst_name}"/>
+                            <TextBox x:Name="TxtAge" Watermark="Age" Text="{Binding NewAge}"  />
+                            <TextBox x:Name="TxtElo" Watermark="Elo" Text="{Binding NewElo}" />
                             <TextBox Watermark="Mail" Text="{Binding NewMail}"/>
-                            <TextBox Watermark="Phone number" Text="{Binding NewPhone_number}"/>
-                            <TextBox Watermark="Country" Text="{Binding NewCountry}"/>
+                            <TextBox x:Name="TxtPhonenumber" Watermark="Phone number" Text="{Binding NewPhone_number}"/>
+                            <TextBox x:Name="TxtCountry" Watermark="Country" Text="{Binding NewCountry}"/>
                         </StackPanel>
                     </Border>
                     
@@ -62,7 +62,8 @@
                                 ItemsSource="{Binding Players}" 
                                 GridLinesVisibility="All"
                                 VerticalScrollBarVisibility="Visible"   
-                                CellEditEnded="DataGrid_CellEditEnded" 
+                                CellEditEnded="DataGrid_CellEditEnded"
+                                PreparingCellForEdit="DataGrid_PreparingCellForEdit"
                                 >
                             <DataGrid.Styles>
                                 <Style Selector="DataGridColumnHeader">
