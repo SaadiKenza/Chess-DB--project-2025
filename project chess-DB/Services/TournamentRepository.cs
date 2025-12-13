@@ -39,6 +39,25 @@ namespace project_chess_DB.Services{
             command5.Parameters.AddWithValue("$name_of_the_tournament", name_of_the_tournament);
             command5.ExecuteNonQuery();
         }
+        public void UpdateTournament(Tournament tournament)
+        {
+            using var connection = DatabaseService.GetOpenConnection();
+            var sql = @"UPDATE Tournaments SET
+            Country = $country,
+            City = $city,
+            Start_date = $start_date,
+            End_date = $end_date
+            WHERE Name_of_the_tournament = $name_of_the_tournament";
+            using var command6 = connection.CreateCommand();
+            command6.CommandText = sql;
+            command6.Parameters.AddWithValue("$name_of_the_tournament", tournament.Name_of_the_tournament);
+            command6.Parameters.AddWithValue("$country", tournament.Country);
+            command6.Parameters.AddWithValue("$city", tournament.City);
+            command6.Parameters.AddWithValue("$start_date", tournament.Start_date);
+            command6.Parameters.AddWithValue("$end_date", tournament.End_date);
+
+            command6.ExecuteNonQuery();
+        }
 
         public List<Tournament> GetAllTournaments()
         {

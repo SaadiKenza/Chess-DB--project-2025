@@ -59,6 +59,10 @@ public partial class TournamentPageViewModel : ViewModelBase
             Tournaments.Remove(tournamentToDelete);
         }
     }
+    private void majTournament(Tournament tournament)
+    {
+        repository.UpdateTournament(tournament);
+    }
 }
 public class RelayCommand2 : ICommand
 {

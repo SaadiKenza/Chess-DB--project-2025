@@ -8,13 +8,11 @@ namespace project_chess_DB.Views;
 
 public partial class PlayerPageView : UserControl
 {
-     private readonly PlayerRepository repo = new PlayerRepository();
+    private readonly PlayerRepository repo = new PlayerRepository();
 
     public PlayerPageView()
     {
-        
         InitializeComponent();
-       
     }
 
     private void DataGrid_CellEditEnded(object? sender, DataGridCellEditEndedEventArgs e)
