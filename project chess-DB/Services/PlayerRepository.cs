@@ -35,6 +35,17 @@ namespace project_chess_DB.Services
             command.ExecuteNonQuery();
         }
 
+        // pour supprimer un player dans la database aussi, et non pas que dans l'UI
+        public void DeletePlayer (string matricule)
+        {
+            using var connection = DatabaseService.GetOpenConnection();
+            var sql = @"DELETE FROM Players WHERE Matricule = $matricule";
+
+            using var command3 = connection.CreateCommand();
+            command3.CommandText = sql;
+            command3.Parameters.AddWithValue("$matricule", matricule);
+            command3.ExecuteNonQuery();
+        }
         public List<Player> GetAllPlayers() //prendre tous les joueurs depuis la base
         {
             var players = new List<Player>(); //liste qui contient les player
