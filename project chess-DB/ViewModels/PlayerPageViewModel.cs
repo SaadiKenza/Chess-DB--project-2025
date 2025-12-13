@@ -54,8 +54,15 @@ public partial class PlayerPageViewModel : ViewModelBase
     {
         if (parameter is Player playerToDelete)
         {
+            //pour supprimer dans la database
+            repository.DeletePlayer(playerToDelete.Matricule);
+            //supprimer dans l'UI
             Players.Remove(playerToDelete);
         }
+    }
+    private void majPlayer(Player player)
+    {
+        repository.UpdatePlayer(player);
     }
     private string GenerateMatricule()
     {

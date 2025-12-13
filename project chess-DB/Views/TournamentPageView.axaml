@@ -90,7 +90,8 @@
                                 Margin="0" 
                                 ItemsSource="{Binding Tournaments}" 
                                 GridLinesVisibility="All"
-                                VerticalScrollBarVisibility="Visible"  
+                                VerticalScrollBarVisibility="Visible"
+                                CellEditEnded="TournamentGrid_CellEditEnded"
                                 >
                             <DataGrid.Styles>
                                 <Style Selector="DataGridColumnHeader">

@@ -51,8 +51,8 @@ namespace project_chess_DB.Services
                 Name_of_the_tournament TEXT PRIMARY KEY,
                 Country TEXT NOT NULL,
                 City TEXT NOT NULL,
-                Start_Date TEXT NOT NULL,
-                End_Date TEXT NOT NULL
+                Start_date TEXT NOT NULL,
+                End_date TEXT NOT NULL
             );";
 
             using var command = connection.CreateCommand();
