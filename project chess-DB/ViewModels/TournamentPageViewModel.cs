@@ -5,7 +5,13 @@ using System.Windows.Input;
 using System;
 using System.Linq;
 using Tmds.DBus.Protocol;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia;
+using ReactiveUI;
+using Avalonia.Threading;
+using System.Threading.Tasks;
 using project_chess_DB.Services;
+using project_chess_DB.Views;
 
 namespace project_chess_DB.ViewModels;
 
@@ -22,19 +28,44 @@ public partial class TournamentPageViewModel : ViewModelBase
     public ICommand DeleteTournamentCommand { get; }
 
     private TournamentRepository repository;
+    public ICommand OpenJoinTournamentCommand { get; }
     public TournamentPageViewModel()
-{
-    // Juste pour vérifier si le ViewModel est bien créé
-    //System.Diagnostics.Debug.WriteLine("✅ TournamentPageViewModel CONSTRUIT");
+    {
+        // Juste pour vérifier si le ViewModel est bien créé
+        //System.Diagnostics.Debug.WriteLine("✅ TournamentPageViewModel CONSTRUIT");
+        OpenJoinTournamentCommand = ReactiveCommand.CreateFromTask<Tournament>(OpenRegistrationWindow, outputScheduler: RxApp.MainThreadScheduler);
+        repository = new TournamentRepository();
+        var tournamentFromDb = repository.GetAllTournaments();
+        Tournaments = new ObservableCollection<Tournament>(tournamentFromDb);
 
-    repository = new TournamentRepository();
-    var tournamentFromDb = repository.GetAllTournaments();
-    Tournaments = new ObservableCollection<Tournament>(tournamentFromDb);
+        // On garde tes commandes comme avant
+        AddTournamentCommand = new RelayCommand2(AddTournament);
+        DeleteTournamentCommand = new RelayCommand2(DeleteTournament);
+    }
+    private async Task OpenRegistrationWindow(Tournament tournament)
+    {
+        if (tournament == null) return;
 
-    // On garde tes commandes comme avant
-    AddTournamentCommand = new RelayCommand2(AddTournament);
-    DeleteTournamentCommand = new RelayCommand2(DeleteTournament);
-}
+        // On utilise Dispatcher.UIThread.InvokeAsync pour garantir qu'on touche à l'UI sur le bon thread
+        await Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            var dialog = new RegisterPlayerPageView();
+
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var mainWindow = desktop.MainWindow;
+                if (mainWindow is not null)
+                {
+                    var result = await dialog.ShowDialog<string>(mainWindow);
+
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Résultat : {result}");
+                    }
+                }
+            }
+        });
+    }
 
     private void AddTournament()
     {
@@ -45,7 +76,7 @@ public partial class TournamentPageViewModel : ViewModelBase
             NewStart_date,
             NewEnd_date
         );
-        
+
         repository.AddTournament(newTournament);
         Tournaments.Add(newTournament);
     }

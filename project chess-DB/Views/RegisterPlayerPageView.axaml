@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="project_chess_DB.Views.RegisterPlayerPageView"
+        Title="Register Player"
+        Width="400" Height="350"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        ExtendClientAreaToDecorationsHint="True">
+
+    <Border Background="#524C42" Padding="20">
+        <StackPanel Spacing="15">
+            <TextBlock Text="Register Player for Tournament" 
+                       FontSize="18" FontWeight="Bold" Foreground="White" 
+                       HorizontalAlignment="Center" Margin="0,20,0,10"/>
+
+            <TextBox Name='Matricule' Watermark="Matricule" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,20,0,0">
+                <Button Content="Cancel" Click="OnCancelClick" 
+                        Background="#B71C1C" Foreground="White" Width="100" HorizontalContentAlignment="Center"/>
+                
+                <Button Content="Confirm" Click="OnConfirmClick" 
+                        Background="#4CAF50" Foreground="White" Width="100" HorizontalContentAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
