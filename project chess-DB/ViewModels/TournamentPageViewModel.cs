@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System;
 using System.Linq;
-using Tmds.DBus.Protocol;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia;
 using ReactiveUI;
@@ -19,34 +18,67 @@ public partial class TournamentPageViewModel : ViewModelBase
 {
     public ObservableCollection<Tournament> Tournaments { get; set; }
 
+    private Tournament? _selectedTournament;
+    public Tournament? SelectedTournament
+    {
+        get => _selectedTournament;
+        set
+        {
+            if (_selectedTournament != value)
+            {
+                _selectedTournament = value;
+                OnPropertyChanged(nameof(SelectedTournament));
+                OnPropertyChanged(nameof(Competitions)); 
+            }
+        }
+    }
+
+    public ObservableCollection<Competition> Competitions => 
+        SelectedTournament?.Competitions ?? new ObservableCollection<Competition>();
+
     public string NewName_of_the_tournament { get; set; } = string.Empty;
     public string NewCountry { get; set; } = string.Empty;
     public string NewCity { get; set; } = string.Empty;
     public string NewStart_date { get; set; } = string.Empty;
     public string NewEnd_date { get; set; } = string.Empty;
+
+
+    public string NewCompetitionDate { get; set; } = string.Empty;
+    public string NewCompetitionNumber { get; set; } = string.Empty; 
+
+    public string NewP1_RegNumber { get; set; } = string.Empty;
+    public string NewP1_Result { get; set; } = string.Empty;
+    public string NewP1_Moves { get; set; } = string.Empty;
+
+    public string NewP2_RegNumber { get; set; } = string.Empty;
+    public string NewP2_Result { get; set; } = string.Empty;
+    public string NewP2_Moves { get; set; } = string.Empty;
+
     public ICommand AddTournamentCommand { get; }
     public ICommand DeleteTournamentCommand { get; }
+    public ICommand OpenJoinTournamentCommand { get; }
+    public ICommand AddCompetitionCommand { get; }
 
     private TournamentRepository repository;
-    public ICommand OpenJoinTournamentCommand { get; }
+
     public TournamentPageViewModel()
     {
-        // Juste pour vérifier si le ViewModel est bien créé
-        //System.Diagnostics.Debug.WriteLine("✅ TournamentPageViewModel CONSTRUIT");
-        OpenJoinTournamentCommand = ReactiveCommand.CreateFromTask<Tournament>(OpenRegistrationWindow, outputScheduler: RxApp.MainThreadScheduler);
         repository = new TournamentRepository();
+    
         var tournamentFromDb = repository.GetAllTournaments();
         Tournaments = new ObservableCollection<Tournament>(tournamentFromDb);
-
-        // On garde tes commandes comme avant
+        
+        OpenJoinTournamentCommand = ReactiveCommand.CreateFromTask<Tournament>(OpenRegistrationWindow, outputScheduler: RxApp.MainThreadScheduler);
         AddTournamentCommand = new RelayCommand2(AddTournament);
         DeleteTournamentCommand = new RelayCommand2(DeleteTournament);
+        AddCompetitionCommand = new RelayCommand2(AddCompetition); 
     }
+
+    // --- METHODES ---
     private async Task OpenRegistrationWindow(Tournament tournament)
     {
         if (tournament == null) return;
 
-        // On utilise Dispatcher.UIThread.InvokeAsync pour garantir qu'on touche à l'UI sur le bon thread
         await Dispatcher.UIThread.InvokeAsync(async () =>
         {
             var dialog = new RegisterPlayerPageView();
@@ -57,7 +89,6 @@ public partial class TournamentPageViewModel : ViewModelBase
                 if (mainWindow is not null)
                 {
                     var result = await dialog.ShowDialog<string>(mainWindow);
-
                     if (!string.IsNullOrEmpty(result))
                     {
                         System.Diagnostics.Debug.WriteLine($"Résultat : {result}");
@@ -80,38 +111,63 @@ public partial class TournamentPageViewModel : ViewModelBase
         repository.AddTournament(newTournament);
         Tournaments.Add(newTournament);
     }
+
     private void DeleteTournament(object? parameter)
     {
         if (parameter is Tournament tournamentToDelete)
         {
-            //pour supprimer dans la database
             repository.DeleteTournament(tournamentToDelete.Name_of_the_tournament);
-            //supprimer dans l'UI
             Tournaments.Remove(tournamentToDelete);
+            
+            if (SelectedTournament == tournamentToDelete)
+            {
+                SelectedTournament = null;
+            }
         }
     }
+
+    private void AddCompetition()
+    {
+        if (SelectedTournament == null) return;
+        var newCompetition = new Competition
+        {
+            CompetitionDate = NewCompetitionDate,
+            CompetitionNumber = NewCompetitionNumber,
+            Player1_RegNumber = NewP1_RegNumber,
+            Player1_Result = NewP1_Result,
+            Player1_Moves = NewP1_Moves,
+            Player2_RegNumber = NewP2_RegNumber,
+            Player2_Result = NewP2_Result,
+            Player2_Moves = NewP2_Moves
+        };
+
+        SelectedTournament.Competitions.Add(newCompetition);
+        
+        OnPropertyChanged(nameof(Competitions));
+    }
+
     private void majTournament(Tournament tournament)
     {
         repository.UpdateTournament(tournament);
     }
 }
+
 public class RelayCommand2 : ICommand
 {
     private readonly Action<object?>? _executeWithParam;
     private readonly Action? _executeNoParam;
 
-    public RelayCommand2(Action<object?> execute)   //avec paramètre
+    public RelayCommand2(Action<object?> execute)
     {
         _executeWithParam = execute;
         _executeNoParam = null;
     }
-    public RelayCommand2(Action execute)        //code quand on veut seullement ajouter
+    public RelayCommand2(Action execute)
     {
         _executeNoParam = execute;
         _executeWithParam = null;
     }
 
-    // Modification ici : On définit des accesseurs vides pour faire taire l'avertissement
     public event EventHandler? CanExecuteChanged
     {
         add { }

@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:vm="clr-namespace:project_chess_DB.ViewModels"
+             xmlns:vm="clr-namespace:project_chess_DB.ViewModels"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:project_chess_DB.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -41,7 +41,9 @@
                     <Border Width="450" HorizontalAlignment="Left" Background="#524C42" CornerRadius="5" Padding="10">
                         <StackPanel Spacing="15">
                             <TextBlock Text="Competition Details" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" FontSize="16"/>
-                            <TextBox Watermark="Competition date"/>
+                            <TextBox Watermark="Competition number" Text="{Binding NewCompetitionNumber}"/>
+                            <TextBox Watermark="Competition date" Text="{Binding NewCompetitionDate}"/>
+                            
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -50,23 +52,21 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Spacing="5">
                                     <TextBlock Text="Player 1" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-                                    <TextBox Watermark="Registration number"/>
-                                    <TextBox Watermark="Competition number"/>
-                                    <TextBox Watermark="Winner/Loser"/>
-                                    <TextBox Watermark="moves"/>
+                                    <TextBox Watermark="Registration number" Text="{Binding NewP1_RegNumber}"/>
+                                    <TextBox Watermark="Result" Text="{Binding NewP1_Result}"/>
+                                    <TextBox Watermark="moves" Text="{Binding NewP1_Moves}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Spacing="5">
                                     <TextBlock Text="Player 2" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-                                    <TextBox Watermark="Registration number"/>
-                                    <TextBox Watermark="Competition number"/>
-                                    <TextBox Watermark="Winner/Loser"/>
-                                    <TextBox Watermark="moves"/>
+                                    <TextBox Watermark="Registration number" Text="{Binding NewP2_RegNumber}"/>
+                                    <TextBox Watermark="Result" Text="{Binding NewP2_Result}"/>
+                                    <TextBox Watermark="moves" Text="{Binding NewP2_Moves}"/>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
                     </Border>
 
-                    <Button HorizontalAlignment="Left" Background="#524C42" Margin="140,0,20,20">
+                    <Button HorizontalAlignment="Left" Background="#524C42" Margin="140,0,20,20" Command="{Binding AddCompetitionCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
                             <PathIcon Data="{StaticResource add_icon}" Width="15" Height="15" Foreground="White"/>
                             <TextBlock Text="Add Competition info" VerticalAlignment="Center" Foreground="White"/>
@@ -74,7 +74,7 @@
                     </Button>
                 </StackPanel>
 
-                <Grid Grid.Column="1" RowDefinitions="Auto, *">
+                <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto, *">
 
                     <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Width="300" HorizontalAlignment="Center" Margin="0,0,150,10">
                         <TextBox Grid.Column="0" Watermark="Search a tournament..." x:Name="txtSearch" Height="30" CornerRadius="5 0 0 5" Background="#524C42" Foreground="White"/>
@@ -89,6 +89,7 @@
                                 VerticalAlignment="Top"
                                 Margin="0" 
                                 ItemsSource="{Binding Tournaments}" 
+                                SelectedItem="{Binding SelectedTournament}"
                                 GridLinesVisibility="All"
                                 VerticalScrollBarVisibility="Visible"
                                 CellEditEnded="TournamentGrid_CellEditEnded"
@@ -122,7 +123,36 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
-                    
+
+                    <TextBlock Grid.Row="2" Text="Competitions details" FontSize="20" FontWeight="SemiBold" Margin="0,10,0,5"/>
+                    <Border Grid.Row="3" Margin="0,0,30,30" CornerRadius="10" BorderThickness="1" BorderBrush="Gray">
+                        <DataGrid x:CompileBindings="False"
+                                ItemsSource="{Binding SelectedTournament.Competitions}"
+                                GridLinesVisibility="All"
+                                VerticalScrollBarVisibility="Visible"
+                                IsReadOnly="True">
+                            <DataGrid.Styles>
+                                <Style Selector="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#524C42"/> 
+                                    <Setter Property="Foreground" Value="White"/>   
+                                    <Setter Property="FontWeight" Value="Bold"/>    
+                                </Style>
+                            </DataGrid.Styles>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="No." Binding="{Binding CompetitionNumber}" Width="Auto"/>
+                                <DataGridTextColumn Header="Date" Binding="{Binding CompetitionDate}" Width="Auto"/>
+                                
+                                <DataGridTextColumn Header="P1 Registration" Binding="{Binding Player1_RegNumber}" Width="*"/>
+                                <DataGridTextColumn Header="P1 Result" Binding="{Binding Player1_Result}" Width="*"/>
+                                <DataGridTextColumn Header="P1 Moves" Binding="{Binding Player1_Moves}" Width="*"/>
+
+                                <DataGridTextColumn Header="P2 Registration" Binding="{Binding Player2_RegNumber}" Width="*"/>
+                                <DataGridTextColumn Header="P2 Result" Binding="{Binding Player2_Result}" Width="*"/>
+                                <DataGridTextColumn Header="P2 Moves" Binding="{Binding Player2_Moves}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>       
                 </Grid>
                 
             </Grid>
