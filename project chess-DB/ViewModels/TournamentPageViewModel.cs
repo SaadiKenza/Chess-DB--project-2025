@@ -44,27 +44,27 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewName_of_the_tournament
     {
         get => _newName_of_the_tournament;
-        set { if (_newName_of_the_tournament != value) { _newName_of_the_tournament = value; OnPropertyChanged(nameof(NewName_of_the_tournament)); } }
+        set { if (_newName_of_the_tournament != value) { _newName_of_the_tournament = value; OnPropertyChanged(nameof(NewName_of_the_tournament));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewCountry
     {
         get => _newCountry;
-        set { if (_newCountry != value) { _newCountry = value; OnPropertyChanged(nameof(NewCountry)); } }
+        set { if (_newCountry != value) { _newCountry = value; OnPropertyChanged(nameof(NewCountry));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewCity
     {
         get => _newCity;
-        set { if (_newCity != value) { _newCity = value; OnPropertyChanged(nameof(NewCity)); } }
+        set { if (_newCity != value) { _newCity = value; OnPropertyChanged(nameof(NewCity));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewStart_date
     {
         get => _newStart_date;
-        set { if (_newStart_date != value) { _newStart_date = value; OnPropertyChanged(nameof(NewStart_date)); } }
+        set { if (_newStart_date != value) { _newStart_date = value; OnPropertyChanged(nameof(NewStart_date)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
     }
     public string NewEnd_date
     {
         get => _newEnd_date;
-        set { if (_newEnd_date != value) { _newEnd_date = value; OnPropertyChanged(nameof(NewEnd_date)); } }
+        set { if (_newEnd_date != value) { _newEnd_date = value; OnPropertyChanged(nameof(NewEnd_date));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
 
 
@@ -73,12 +73,12 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewCompetitionDate
     {
         get => _newCompetitionDate;
-        set { if (_newCompetitionDate != value) { _newCompetitionDate = value; OnPropertyChanged(nameof(NewCompetitionDate)); } }
+        set { if (_newCompetitionDate != value) { _newCompetitionDate = value; OnPropertyChanged(nameof(NewCompetitionDate)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
     }
     public string NewCompetitionNumber
     {
         get => _newCompetitionNumber;
-        set { if (_newCompetitionNumber != value) { _newCompetitionNumber = value; OnPropertyChanged(nameof(NewCompetitionNumber)); } }
+        set { if (_newCompetitionNumber != value) { _newCompetitionNumber = value; OnPropertyChanged(nameof(NewCompetitionNumber)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
     }
     private string _newP1_RegNumber { get; set; } = string.Empty;
     private string _newP1_Result { get; set; } = string.Empty;
@@ -86,17 +86,17 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewP1_RegNumber
     {
         get => _newP1_RegNumber;
-        set { if (_newP1_RegNumber != value) { _newP1_RegNumber = value; OnPropertyChanged(nameof(NewP1_RegNumber)); } }
+        set { if (_newP1_RegNumber != value) { _newP1_RegNumber = value; OnPropertyChanged(nameof(NewP1_RegNumber));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewP1_Result
     {
         get => _newP1_Result;
-        set { if (_newP1_Result != value) { _newP1_Result = value; OnPropertyChanged(nameof(NewP1_Result)); } }
+        set { if (_newP1_Result != value) { _newP1_Result = value; OnPropertyChanged(nameof(NewP1_Result)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
     }
     public string NewP1_Moves
     {
         get => _newP1_Moves;
-        set { if (_newP1_Moves != value) { _newP1_Moves = value; OnPropertyChanged(nameof(NewP1_Moves)); } }
+        set { if (_newP1_Moves != value) { _newP1_Moves = value; OnPropertyChanged(nameof(NewP1_Moves)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
     }
     private string _newP2_RegNumber { get; set; } = string.Empty;
     private string _newP2_Result { get; set; } = string.Empty;
@@ -104,17 +104,17 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewP2_RegNumber
     {
         get => _newP2_RegNumber;
-        set { if (_newP2_RegNumber != value) { _newP2_RegNumber = value; OnPropertyChanged(nameof(NewP2_RegNumber)); } }
+        set { if (_newP2_RegNumber != value) { _newP2_RegNumber = value; OnPropertyChanged(nameof(NewP2_RegNumber));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewP2_Result
     {
         get => _newP2_Result;
-        set { if (_newP2_Result != value) { _newP2_Result = value; OnPropertyChanged(nameof(NewP2_Result)); } }
+        set { if (_newP2_Result != value) { _newP2_Result = value; OnPropertyChanged(nameof(NewP2_Result));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public string NewP2_Moves
     {
         get => _newP2_Moves;
-        set { if (_newP2_Moves != value) { _newP2_Moves = value; OnPropertyChanged(nameof(NewP2_Moves)); } }
+        set { if (_newP2_Moves != value) { _newP2_Moves = value; OnPropertyChanged(nameof(NewP2_Moves));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
     }
     public ICommand AddTournamentCommand { get; }
     public ICommand DeleteTournamentCommand { get; }
@@ -270,30 +270,33 @@ public partial class TournamentPageViewModel : ViewModelBase
         repository.UpdateTournament(tournament);
     }
 }
-
 public class RelayCommand2 : ICommand
 {
     private readonly Action<object?>? _executeWithParam;
     private readonly Action? _executeNoParam;
-
-    public RelayCommand2(Action<object?> execute)
+    private readonly Predicate<object?>? _canExecute;
+    public RelayCommand2(Action<object?> execute, Predicate<object?>? canExecute = null)
     {
         _executeWithParam = execute;
         _executeNoParam = null;
+        _canExecute = canExecute;
     }
-    public RelayCommand2(Action execute)
+
+    public RelayCommand2(Action execute, Func<bool>? canExecute = null)
     {
         _executeNoParam = execute;
         _executeWithParam = null;
+        if (canExecute != null)
+        {
+            _canExecute = _ => canExecute();
+        }
     }
-
-    public event EventHandler? CanExecuteChanged
+    public event EventHandler? CanExecuteChanged;
+    public bool CanExecute(object? parameter)
     {
-        add { }
-        remove { }
+        return _canExecute == null || _canExecute(parameter);
     }
 
-    public bool CanExecute(object? parameter) => true;
     public void Execute(object? parameter)
     {
         if (_executeWithParam != null)
@@ -304,5 +307,9 @@ public class RelayCommand2 : ICommand
         {
             _executeNoParam?.Invoke();
         }
+    }
+    public void RaiseCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -23,9 +23,9 @@
                     <Border Width="250" Background="#524C42" CornerRadius="5" Padding="10">
                         <StackPanel Spacing="10">
                             <TextBlock Text="New Tournament Details" FontWeight="Bold"/>
-                            <TextBox Watermark="Name of the tournament" Text="{Binding NewName_of_the_tournament}"/>
-                            <TextBox Watermark="Country" Text="{Binding NewCountry}"/>
-                            <TextBox Watermark="City" Text="{Binding NewCity}"/>
+                            <TextBox x:Name="TxtName_of_the_tournament" Watermark="Name of the tournament" Text="{Binding NewName_of_the_tournament}"/>
+                            <TextBox x:Name="TxtCountry" Watermark="Country" Text="{Binding NewCountry}"/>
+                            <TextBox x:Name="TxtCity" Watermark="City" Text="{Binding NewCity}"/>
                             <TextBox Watermark="Start date" Text="{Binding NewStart_date}"/>
                             <TextBox Watermark="End date" Text="{Binding NewEnd_date}"/>
                         </StackPanel>
@@ -41,7 +41,7 @@
                     <Border Width="450" HorizontalAlignment="Left" Background="#524C42" CornerRadius="5" Padding="10">
                         <StackPanel Spacing="15">
                             <TextBlock Text="Competition Details" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" FontSize="16"/>
-                            <TextBox Watermark="Competition number" Text="{Binding NewCompetitionNumber}"/>
+                            <TextBox x:Name="TxtCompetition_number"  Watermark="Competition number" Text="{Binding NewCompetitionNumber}"/>
                             <TextBox Watermark="Competition date" Text="{Binding NewCompetitionDate}"/>
                             
                             <Grid>
@@ -52,7 +52,7 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Spacing="5">
                                     <TextBlock Text="Player 1" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-                                    <TextBox Watermark="Registration number" Text="{Binding NewP1_RegNumber}"/>
+                                    <TextBox x:Name="TxtRegistration_number1" Watermark="Registration number" Text="{Binding NewP1_RegNumber}"/>
                                     <ComboBox PlaceholderText="Result" 
                                         SelectedItem="{Binding NewP1_Result}" 
                                         HorizontalAlignment="Stretch">
@@ -60,11 +60,11 @@
                                         <x:String>0.5</x:String>
                                         <x:String>1</x:String>
                                     </ComboBox>
-                                    <TextBox Watermark="moves" Text="{Binding NewP1_Moves}"/>
+                                    <TextBox x:Name="TxtMoves1" Watermark="moves" Text="{Binding NewP1_Moves}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Spacing="5">
                                     <TextBlock Text="Player 2" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-                                    <TextBox Watermark="Registration number" Text="{Binding NewP2_RegNumber}"/>
+                                    <TextBox x:Name="TxtRegistration_number2" Watermark="Registration number" Text="{Binding NewP2_RegNumber}"/>
                                     <ComboBox PlaceholderText="Result" 
                                         SelectedItem="{Binding NewP2_Result}" 
                                         HorizontalAlignment="Stretch">
@@ -72,7 +72,7 @@
                                         <x:String>0.5</x:String>
                                         <x:String>1</x:String>
                                     </ComboBox>
-                                    <TextBox Watermark="moves" Text="{Binding NewP2_Moves}"/>
+                                    <TextBox x:Name="TxtMoves2" Watermark="moves" Text="{Binding NewP2_Moves}"/>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
