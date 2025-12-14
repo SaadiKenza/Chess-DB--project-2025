@@ -64,6 +64,22 @@ namespace project_chess_DB.Services
             FOREIGN KEY (PlayerMatricule) REFERENCES Players (Matricule)
             )"; //les foreign key ici garantissent que le tournois existe dans Tournaments, de même pour player
 
+            var createCompetitionsTableSql = @"CREATE TABLE IF NOT EXISTS Competitions (
+            TournamentName TEXT NOT NULL,
+            CompetitionNumber TEXT NOT NULL,
+            CompetitionDate TEXT NOT NULL,
+            Player1Matricule TEXT NOT NULL,
+            Player2Matricule TEXT NOT NULL,
+            Player1Result TEXT,
+            Player2Result TEXT,
+            Player1Moves TEXT,
+            Player2Moves TEXT,
+
+            PRIMARY KEY (TournamentName, CompetitionNumber),
+            FOREIGN KEY (TournamentName) REFERENCES Tournaments(Name_of_the_tournament),
+            FOREIGN KEY (Player1Matricule) REFERENCES Players(Matricule),
+            FOREIGN KEY (Player2Matricule) REFERENCES Players(Matricule))";
+
             using var command = connection.CreateCommand();
             command.CommandText = createPlayersTableSql; //execution de la commande sql en haut, pour créer la table
             command.ExecuteNonQuery(); //la commande ne retourne rien
@@ -75,6 +91,10 @@ namespace project_chess_DB.Services
             using var command3 = connection.CreateCommand();
             command3.CommandText = createTournamentPlayersTableSql; 
             command3.ExecuteNonQuery();
+
+            using var command7 = connection.CreateCommand();
+            command7.CommandText = createCompetitionsTableSql;
+            command7.ExecuteNonQuery();
         }
 
         /// <summary>
