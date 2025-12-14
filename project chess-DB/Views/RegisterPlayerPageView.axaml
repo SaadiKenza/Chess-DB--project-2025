@@ -26,6 +26,10 @@
                     <TextBlock Text="Matricule :" Foreground="White"/>
                     <TextBox x:Name="TxtMatricule" Watermark="Matricule" Text="{Binding NewMatricule}"/>
 
+                    <TextBlock Text="{Binding ErrorMessage}"
+                                Foreground ="#FF5252"
+                                FontSize="12"
+                                TextWrapping="Wrap"/>
                     <Button Content="Register" Command="{Binding AddPlayerCommand}" 
                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                             Background="#4CAF50" Foreground="White" Margin="0,10,0,0"/>

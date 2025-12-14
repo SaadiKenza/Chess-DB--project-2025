@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
 using project_chess_DB.Models;
+using System;
 
 //Joueur : Player (le ficier models), Service : PlayerRepository , table sql (db): Players, un joueur à ajouter player 
 //player est un objet de Player
@@ -36,7 +37,7 @@ namespace project_chess_DB.Services
         }
 
         // pour supprimer un player dans la database aussi, et non pas que dans l'UI
-        public void DeletePlayer (string matricule)
+        public void DeletePlayer(string matricule)
         {
             using var connection = DatabaseService.GetOpenConnection();
             var sql = @"DELETE FROM Players WHERE Matricule = $matricule";
@@ -70,9 +71,9 @@ namespace project_chess_DB.Services
             command4.Parameters.AddWithValue("$country", player.Country);
             command4.Parameters.AddWithValue("$mail", player.Mail);
             command4.Parameters.AddWithValue("$phone", player.Phone_number);
-            
+
             command4.ExecuteNonQuery();
-            }
+        }
         public List<Player> GetAllPlayers() //prendre tous les joueurs depuis la base
         {
             var players = new List<Player>(); //liste qui contient les player
@@ -107,7 +108,20 @@ namespace project_chess_DB.Services
         }
 
         // Tu peux ajouter UpdatePlayer, DeletePlayer, GetByMatricule, etc.
+        //on vérifie si le joueur existe pour l'inscription à des tournois
+        public bool PlayerExists(string matricule)
+        {
+            using var connection = DatabaseService.GetOpenConnection();
+            var sql = "SELECT COUNT(*) FROM Players WHERE Matricule = $matricule";
+
+            using var command = connection.CreateCommand();
+            command.CommandText = sql;
+            command.Parameters.AddWithValue("$matricule", matricule);
+            var count = Convert.ToInt32(command.ExecuteScalar());
+            return count > 0;
+        }
     }
+    // Dans project_chess_DB.Services.PlayerRepository
 }
 
 

@@ -2,13 +2,17 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Reactive;
 using ReactiveUI;
+using project_chess_DB.Services;
+using Avalonia.Rendering.Composition;
 
 namespace project_chess_DB.ViewModels;
 
 public class RegisterPlayerViewModel : ReactiveObject
 {
     private readonly ObservableCollection<string> _sourcePlayers;
+    private readonly PlayerRepository _repository;
     private ObservableCollection<string> _filteredPlayers;
     public ObservableCollection<string> FilteredPlayers
     {
@@ -19,7 +23,17 @@ public class RegisterPlayerViewModel : ReactiveObject
     public string NewMatricule
     {
         get => _newMatricule;
-        set => this.RaiseAndSetIfChanged(ref _newMatricule, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _newMatricule, value);
+            if (!string.IsNullOrEmpty(ErrorMessage)) ErrorMessage = string.Empty;
+        }
+    }
+    private string _errorMessage = string.Empty;
+    public string ErrorMessage
+    {
+        get => _errorMessage;
+        set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
     }
     private string _searchText = string.Empty;
     public string SearchText
@@ -32,13 +46,15 @@ public class RegisterPlayerViewModel : ReactiveObject
         }
     }
 
-    public ICommand AddPlayerCommand { get; }
-    public ICommand DeletePlayerCommand { get; }
-    public ICommand CloseCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> AddPlayerCommand { get; }
+    public ReactiveCommand<string, Unit> DeletePlayerCommand { get; }
+    public ReactiveCommand<Unit, Unit> CloseCommand { get; }
     public Action? CloseAction { get; set; }
     public RegisterPlayerViewModel(ObservableCollection<string> tournamentPlayers)
     {
         _sourcePlayers = tournamentPlayers;
+        _repository=new PlayerRepository();
 
         _filteredPlayers = new ObservableCollection<string>(_sourcePlayers);
 
@@ -49,15 +65,22 @@ public class RegisterPlayerViewModel : ReactiveObject
 
     private void AddPlayer()
     {
-        if (!string.IsNullOrWhiteSpace(NewMatricule))
+        if (string.IsNullOrWhiteSpace(NewMatricule)) return;
+        if (_sourcePlayers.Contains(NewMatricule))
         {
-            if (!_sourcePlayers.Contains(NewMatricule))
-            {
-                _sourcePlayers.Add(NewMatricule);
-                NewMatricule = string.Empty;
-                FilterList();
-            }
+            ErrorMessage="Joueur déjà inscrit au tournoi";
+            return;
         }
+        bool existsInDb=_repository.PlayerExists(NewMatricule);
+        if (!existsInDb)
+        {
+            ErrorMessage="Matricule inconnu";
+            return;
+        } 
+        _sourcePlayers.Add(NewMatricule);
+        NewMatricule = string.Empty;
+        ErrorMessage = string.Empty;
+        FilterList();
     }
 
     private void DeletePlayer(string matricule)
