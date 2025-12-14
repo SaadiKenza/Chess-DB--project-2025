@@ -10,6 +10,7 @@ namespace project_chess_DB.Models
         public string Start_date { get; set; } = string.Empty;
         public string End_date { get; set; } = string.Empty;
         public ObservableCollection<Competition> Competitions { get; set; } = new ObservableCollection<Competition>();
+        public ObservableCollection<string> RegisteredPlayers { get; set; } = new ObservableCollection<string>();
         public Tournament(string name_of_the_tournament, string country, string city, string start_date, string end_date)
         {
             this.Name_of_the_tournament = name_of_the_tournament;

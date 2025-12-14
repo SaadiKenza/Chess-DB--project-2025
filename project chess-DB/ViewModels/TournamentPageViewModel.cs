@@ -171,20 +171,30 @@ public partial class TournamentPageViewModel : ViewModelBase
     {
         if (tournament == null) return;
 
+        // Sécurité : on s'assure que la liste existe
+        if (tournament.RegisteredPlayers == null)
+            tournament.RegisteredPlayers = new ObservableCollection<string>();
+
+        // On exécute tout sur le thread UI
         await Dispatcher.UIThread.InvokeAsync(async () =>
         {
+            // 1. Création du ViewModel avec les données du tournoi
+            var registerVm = new RegisterPlayerViewModel(tournament.RegisteredPlayers);
+
+            // 2. Création de la Vue (Fenêtre)
             var dialog = new RegisterPlayerPageView();
 
+            // 3. IMPORTANT : Lier le ViewModel à la Vue
+            dialog.DataContext = registerVm;
+
+            // 4. Afficher la fenêtre
             if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var mainWindow = desktop.MainWindow;
                 if (mainWindow is not null)
                 {
-                    var result = await dialog.ShowDialog<string>(mainWindow);
-                    if (!string.IsNullOrEmpty(result))
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Résultat : {result}");
-                    }
+                    // On attend que la fenêtre se ferme
+                    await dialog.ShowDialog(mainWindow);
                 }
             }
         });

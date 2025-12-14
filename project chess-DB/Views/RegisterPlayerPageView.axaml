@@ -1,27 +1,90 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:project_chess_DB.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
         x:Class="project_chess_DB.Views.RegisterPlayerPageView"
-        Title="Register Player"
-        Width="400" Height="350"
+        x:DataType="vm:RegisterPlayerViewModel"
+        Title="Inscriptions des joueurs"
+        Width="750" Height="450"
         WindowStartupLocation="CenterOwner"
         CanResize="False"
         ExtendClientAreaToDecorationsHint="True">
 
     <Border Background="#524C42" Padding="20">
-        <StackPanel Spacing="15">
-            <TextBlock Text="Register Player for Tournament" 
-                       FontSize="18" FontWeight="Bold" Foreground="White" 
-                       HorizontalAlignment="Center" Margin="0,20,0,10"/>
+        <Grid ColumnDefinitions="250, 30, *">
+            
+            <Border Grid.Column="0" Background="#454038" CornerRadius="10" Padding="15" VerticalAlignment="Top">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Add a player" 
+                               FontSize="18" FontWeight="Bold" Foreground="White" 
+                               HorizontalAlignment="Center"/>
+                    
+                    <Separator Background="Gray" Height="1" Margin="0,0,0,10"/>
 
-            <TextBox Name='Matricule' Watermark="Matricule" />
+                    <TextBlock Text="Matricule :" Foreground="White"/>
+                    <TextBox x:Name="TxtMatricule" Watermark="Matricule" Text="{Binding NewMatricule}"/>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,20,0,0">
-                <Button Content="Cancel" Click="OnCancelClick" 
-                        Background="#B71C1C" Foreground="White" Width="100" HorizontalContentAlignment="Center"/>
+                    <Button Content="Register" Command="{Binding AddPlayerCommand}" 
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                            Background="#4CAF50" Foreground="White" Margin="0,10,0,0"/>
+
+                    <Button Content="Close" Command="{Binding CloseCommand}" 
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                            Background="#757575" Foreground="White" Margin="0,30,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Column="2" RowDefinitions="Auto, *">
                 
-                <Button Content="Confirm" Click="OnConfirmClick" 
-                        Background="#4CAF50" Foreground="White" Width="100" HorizontalContentAlignment="Center"/>
-            </StackPanel>
-        </StackPanel>
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,15">
+                    <TextBox Grid.Column="0" Watermark="Search a player..." Text="{Binding SearchText}" 
+                             Height="32" CornerRadius="5 0 0 5" Background="#454038" Foreground="White" BorderThickness="0"/>
+                    <Button Grid.Column="1" Height="32" CornerRadius="0 10 5 0" Background="#454038">
+                        <PathIcon Data="{StaticResource search_icon}" Width="15" Height="15" Foreground="White"/>
+                    </Button>
+                </Grid>
+
+                <Border Grid.Row="1" CornerRadius="5" BorderThickness="1" BorderBrush="#6D655A" Background="#454038">
+                    <DataGrid ItemsSource="{Binding FilteredPlayers}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              GridLinesVisibility="Horizontal"
+                              CanUserResizeColumns="True"
+                              CanUserSortColumns="True">
+                        
+                        <DataGrid.Styles>
+                            <Style Selector="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#3E3932"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Padding" Value="10,0"/>
+                            </Style>
+                            <Style Selector="DataGridRow">
+                                <Setter Property="Foreground" Value="White"/>
+                            </Style>
+                        </DataGrid.Styles>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Player Register" Binding="{Binding .}" Width="*"/>
+
+                            <DataGridTemplateColumn Header="Action" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Width="35" Height="30" CornerRadius="4" 
+                                                Background="#B71C1C" HorizontalAlignment="Center"
+                                                Command="{Binding $parent[Window].DataContext.DeletePlayerCommand}"
+                                                CommandParameter="{Binding .}">
+                                            <PathIcon Data="{StaticResource delete_forever_regular}" Width="16" Height="16" Foreground="White"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
+        </Grid>
     </Border>
 </Window>
