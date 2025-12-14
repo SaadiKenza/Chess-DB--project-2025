@@ -33,6 +33,22 @@ public partial class TournamentPageView : UserControl
         txtRegistration_number2?.AddHandler(TextInputEvent, Numeric_TextInput, RoutingStrategies.Tunnel);
         txtMoves2?.AddHandler(TextInputEvent, Letters_TextInput, RoutingStrategies.Tunnel);
     }
+    private void DataGrid_PreparingCellForEdit(object? sender, DataGridPreparingCellForEditEventArgs e)
+    {
+        if (e.EditingElement is TextBox textBox)
+        {
+            var header = e.Column.Header?.ToString();
+
+            if (header == "No." || header == "P1 Registration" || header == "P2 Registration")
+            {
+                textBox.AddHandler(TextInputEvent, Numeric_TextInput, RoutingStrategies.Tunnel);
+            }
+            else if (header == "Name of the tournament" || header == "Country" || header == "City" || header == "P1 Moves" || header == "P2 Moves")
+            {
+                textBox.AddHandler(TextInputEvent, Letters_TextInput, RoutingStrategies.Tunnel);
+            }
+        }
+    }
 
     private void TournamentGrid_CellEditEnded(object? sender, DataGridCellEditEndedEventArgs t)
     {

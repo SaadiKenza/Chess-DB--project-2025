@@ -105,6 +105,7 @@
                                 GridLinesVisibility="All"
                                 VerticalScrollBarVisibility="Visible"
                                 CellEditEnded="TournamentGrid_CellEditEnded"
+                                PreparingCellForEdit="DataGrid_PreparingCellForEdit"
                                 >
                             <DataGrid.Styles>
                                 <Style Selector="DataGridColumnHeader">
@@ -141,7 +142,8 @@
                         <DataGrid x:CompileBindings="False"
                                 ItemsSource="{Binding SelectedTournament.Competitions}"
                                 GridLinesVisibility="All"
-                                VerticalScrollBarVisibility="Visible">
+                                VerticalScrollBarVisibility="Visible"
+                                PreparingCellForEdit="DataGrid_PreparingCellForEdit">
                             <DataGrid.Styles>
                                 <Style Selector="DataGridColumnHeader">
                                     <Setter Property="Background" Value="#524C42"/> 
