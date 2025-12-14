@@ -6,11 +6,14 @@ using System.Reactive;
 using ReactiveUI;
 using project_chess_DB.Services;
 using Avalonia.Rendering.Composition;
+using Avalonia.Controls.Converters;
 
 namespace project_chess_DB.ViewModels;
 
 public class RegisterPlayerViewModel : ReactiveObject
 {
+    private readonly TournamentPlayersRepository _tpRepository;
+    private readonly string _tournamentName;
     private readonly ObservableCollection<string> _sourcePlayers;
     private readonly PlayerRepository _repository;
     private ObservableCollection<string> _filteredPlayers;
@@ -51,9 +54,14 @@ public class RegisterPlayerViewModel : ReactiveObject
     public ReactiveCommand<string, Unit> DeletePlayerCommand { get; }
     public ReactiveCommand<Unit, Unit> CloseCommand { get; }
     public Action? CloseAction { get; set; }
-    public RegisterPlayerViewModel(ObservableCollection<string> tournamentPlayers)
+    public RegisterPlayerViewModel(string tournamentName)
     {
-        _sourcePlayers = tournamentPlayers;
+        _tournamentName = tournamentName;
+        _tpRepository = new TournamentPlayersRepository();
+        _sourcePlayers = new ObservableCollection<string>(
+            _tpRepository.GetPlayersForTournament(_tournamentName)
+
+        );
         _repository = new PlayerRepository();
 
         _filteredPlayers = new ObservableCollection<string>(_sourcePlayers);
@@ -77,20 +85,45 @@ public class RegisterPlayerViewModel : ReactiveObject
             ErrorMessage = "unknown Matricule";
             return;
         }
+        using var connection = DatabaseService.GetOpenConnection();
+        using var command = connection.CreateCommand();
+        command.CommandText = @"INSERT OR IGNORE INTO TournamentPlayers (TournamentName, PlayerMatricule) VALUES (@tournamentname, @matricule);";
+        command.Parameters.AddWithValue("@tournamentname", _tournamentName);
+        command.Parameters.AddWithValue("@matricule", NewMatricule);
+        command.ExecuteNonQuery();
+
         _sourcePlayers.Add(NewMatricule);
-        NewMatricule = string.Empty;
-        ErrorMessage = string.Empty;
         FilterList();
+        NewMatricule="";
     }
 
-    private void DeletePlayer(string matricule)
+    /*private void DeletePlayer(string matricule)
     {
         if (_sourcePlayers.Contains(matricule))
         {
             _sourcePlayers.Remove(matricule);
             FilterList();
         }
-    }
+    }*/
+
+    private void DeletePlayer(string matricule)
+{
+    using var connection = DatabaseService.GetOpenConnection();
+    using var command = connection.CreateCommand();
+
+    command.CommandText = @"
+        DELETE FROM TournamentPlayers
+        WHERE TournamentName = @t AND PlayerMatricule = @m;
+    ";
+    command.Parameters.AddWithValue("@t", _tournamentName);
+    command.Parameters.AddWithValue("@m", matricule);
+
+    command.ExecuteNonQuery();
+
+    _sourcePlayers.Remove(matricule);
+    FilterList();
+}
+
 
     private void FilterList()
     {

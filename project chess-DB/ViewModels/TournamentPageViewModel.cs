@@ -176,7 +176,7 @@ public partial class TournamentPageViewModel : ViewModelBase
         await Dispatcher.UIThread.InvokeAsync(async () =>
         {
 
-            var registerVm = new RegisterPlayerViewModel(tournament.RegisteredPlayers);
+            var registerVm = new RegisterPlayerViewModel(tournament.Name_of_the_tournament);
 
             var dialog = new RegisterPlayerPageView();
 
