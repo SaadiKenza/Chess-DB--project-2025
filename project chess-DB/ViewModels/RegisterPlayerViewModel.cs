@@ -54,7 +54,7 @@ public class RegisterPlayerViewModel : ReactiveObject
     public RegisterPlayerViewModel(ObservableCollection<string> tournamentPlayers)
     {
         _sourcePlayers = tournamentPlayers;
-        _repository=new PlayerRepository();
+        _repository = new PlayerRepository();
 
         _filteredPlayers = new ObservableCollection<string>(_sourcePlayers);
 
@@ -68,15 +68,15 @@ public class RegisterPlayerViewModel : ReactiveObject
         if (string.IsNullOrWhiteSpace(NewMatricule)) return;
         if (_sourcePlayers.Contains(NewMatricule))
         {
-            ErrorMessage="Joueur déjà inscrit au tournoi";
+            ErrorMessage = "Player is already registered for the tournament.";
             return;
         }
-        bool existsInDb=_repository.PlayerExists(NewMatricule);
+        bool existsInDb = _repository.PlayerExists(NewMatricule);
         if (!existsInDb)
         {
-            ErrorMessage="Matricule inconnu";
+            ErrorMessage = "unknown Matricule";
             return;
-        } 
+        }
         _sourcePlayers.Add(NewMatricule);
         NewMatricule = string.Empty;
         ErrorMessage = string.Empty;
