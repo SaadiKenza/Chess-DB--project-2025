@@ -44,27 +44,27 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewName_of_the_tournament
     {
         get => _newName_of_the_tournament;
-        set { if (_newName_of_the_tournament != value) { _newName_of_the_tournament = value; OnPropertyChanged(nameof(NewName_of_the_tournament));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newName_of_the_tournament != value) { _newName_of_the_tournament = value; OnPropertyChanged(nameof(NewName_of_the_tournament)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewCountry
     {
         get => _newCountry;
-        set { if (_newCountry != value) { _newCountry = value; OnPropertyChanged(nameof(NewCountry));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newCountry != value) { _newCountry = value; OnPropertyChanged(nameof(NewCountry)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewCity
     {
         get => _newCity;
-        set { if (_newCity != value) { _newCity = value; OnPropertyChanged(nameof(NewCity));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newCity != value) { _newCity = value; OnPropertyChanged(nameof(NewCity)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewStart_date
     {
         get => _newStart_date;
-        set { if (_newStart_date != value) { _newStart_date = value; OnPropertyChanged(nameof(NewStart_date)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
+        set { if (_newStart_date != value) { _newStart_date = value; OnPropertyChanged(nameof(NewStart_date)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewEnd_date
     {
         get => _newEnd_date;
-        set { if (_newEnd_date != value) { _newEnd_date = value; OnPropertyChanged(nameof(NewEnd_date));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newEnd_date != value) { _newEnd_date = value; OnPropertyChanged(nameof(NewEnd_date)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
 
 
@@ -73,12 +73,12 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewCompetitionDate
     {
         get => _newCompetitionDate;
-        set { if (_newCompetitionDate != value) { _newCompetitionDate = value; OnPropertyChanged(nameof(NewCompetitionDate)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
+        set { if (_newCompetitionDate != value) { _newCompetitionDate = value; OnPropertyChanged(nameof(NewCompetitionDate)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewCompetitionNumber
     {
         get => _newCompetitionNumber;
-        set { if (_newCompetitionNumber != value) { _newCompetitionNumber = value; OnPropertyChanged(nameof(NewCompetitionNumber)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
+        set { if (_newCompetitionNumber != value) { _newCompetitionNumber = value; OnPropertyChanged(nameof(NewCompetitionNumber)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     private string _newP1_RegNumber { get; set; } = string.Empty;
     private string _newP1_Result { get; set; } = string.Empty;
@@ -86,17 +86,17 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewP1_RegNumber
     {
         get => _newP1_RegNumber;
-        set { if (_newP1_RegNumber != value) { _newP1_RegNumber = value; OnPropertyChanged(nameof(NewP1_RegNumber));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newP1_RegNumber != value) { _newP1_RegNumber = value; OnPropertyChanged(nameof(NewP1_RegNumber)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewP1_Result
     {
         get => _newP1_Result;
-        set { if (_newP1_Result != value) { _newP1_Result = value; OnPropertyChanged(nameof(NewP1_Result)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
+        set { if (_newP1_Result != value) { _newP1_Result = value; OnPropertyChanged(nameof(NewP1_Result)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewP1_Moves
     {
         get => _newP1_Moves;
-        set { if (_newP1_Moves != value) { _newP1_Moves = value; OnPropertyChanged(nameof(NewP1_Moves)); (AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged();} }
+        set { if (_newP1_Moves != value) { _newP1_Moves = value; OnPropertyChanged(nameof(NewP1_Moves)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     private string _newP2_RegNumber { get; set; } = string.Empty;
     private string _newP2_Result { get; set; } = string.Empty;
@@ -104,17 +104,17 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewP2_RegNumber
     {
         get => _newP2_RegNumber;
-        set { if (_newP2_RegNumber != value) { _newP2_RegNumber = value; OnPropertyChanged(nameof(NewP2_RegNumber));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newP2_RegNumber != value) { _newP2_RegNumber = value; OnPropertyChanged(nameof(NewP2_RegNumber)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewP2_Result
     {
         get => _newP2_Result;
-        set { if (_newP2_Result != value) { _newP2_Result = value; OnPropertyChanged(nameof(NewP2_Result));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newP2_Result != value) { _newP2_Result = value; OnPropertyChanged(nameof(NewP2_Result)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public string NewP2_Moves
     {
         get => _newP2_Moves;
-        set { if (_newP2_Moves != value) { _newP2_Moves = value; OnPropertyChanged(nameof(NewP2_Moves));(AddTournamentCommand as RelayCommand)?.RaiseCanExecuteChanged(); } }
+        set { if (_newP2_Moves != value) { _newP2_Moves = value; OnPropertyChanged(nameof(NewP2_Moves)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
     public ICommand AddTournamentCommand { get; }
     public ICommand DeleteTournamentCommand { get; }
@@ -145,9 +145,9 @@ public partial class TournamentPageViewModel : ViewModelBase
         Tournaments = new ObservableCollection<Tournament>(_allTournaments);
 
         OpenJoinTournamentCommand = ReactiveCommand.CreateFromTask<Tournament>(OpenRegistrationWindow, outputScheduler: RxApp.MainThreadScheduler);
-        AddTournamentCommand = new RelayCommand2(AddTournament);
+        AddTournamentCommand = new RelayCommand2(AddTournament, CanAddTournament);
         DeleteTournamentCommand = new RelayCommand2(DeleteTournament);
-        AddCompetitionCommand = new RelayCommand2(AddCompetition);
+        AddCompetitionCommand = new RelayCommand2(AddCompetition, CanAddCompetition);
     }
     private void FilterTournaments()
     {
@@ -189,7 +189,14 @@ public partial class TournamentPageViewModel : ViewModelBase
             }
         });
     }
-
+    private bool CanAddTournament()
+    {
+        return !string.IsNullOrWhiteSpace(NewName_of_the_tournament) &&
+               !string.IsNullOrWhiteSpace(NewCountry) &&
+               !string.IsNullOrWhiteSpace(NewCity) &&
+               !string.IsNullOrWhiteSpace(NewStart_date) &&
+               !string.IsNullOrWhiteSpace(NewEnd_date);
+    }
     private void AddTournament()
     {
         var newTournament = new Tournament(
@@ -228,7 +235,17 @@ public partial class TournamentPageViewModel : ViewModelBase
             }
         }
     }
-
+    private bool CanAddCompetition()
+    {
+        return !string.IsNullOrWhiteSpace(NewCompetitionDate) &&
+               !string.IsNullOrWhiteSpace(NewCompetitionNumber) &&
+               !string.IsNullOrWhiteSpace(NewP1_RegNumber) &&
+               !string.IsNullOrWhiteSpace(NewP1_Result) &&
+               !string.IsNullOrWhiteSpace(NewP1_Moves) &&
+               !string.IsNullOrWhiteSpace(NewP2_RegNumber) &&
+               !string.IsNullOrWhiteSpace(NewP2_Result) &&
+               !string.IsNullOrWhiteSpace(NewP2_Moves);
+    }
     private void AddCompetition()
     {
         if (SelectedTournament == null) return;
