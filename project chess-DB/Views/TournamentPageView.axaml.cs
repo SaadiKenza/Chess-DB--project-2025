@@ -33,6 +33,10 @@ public partial class TournamentPageView : UserControl
         txtRegistration_number2?.AddHandler(TextInputEvent, Numeric_TextInput, RoutingStrategies.Tunnel);
         txtMoves2?.AddHandler(TextInputEvent, Letters_TextInput, RoutingStrategies.Tunnel);
     }
+    private void CalendarDatePicker_KeyDown(object? sender, KeyEventArgs e)
+    {
+        e.Handled = true; // On dit "J'ai géré la touche", donc rien ne s'écrit
+    }
     private void DataGrid_PreparingCellForEdit(object? sender, DataGridPreparingCellForEditEventArgs e)
     {
         if (e.EditingElement is TextBox textBox)

@@ -28,10 +28,12 @@
                             <TextBox x:Name="TxtCity" Watermark="City" Text="{Binding NewCity}"/>
                             <CalendarDatePicker Watermark="Start date" 
                                 SelectedDate="{Binding NewStart_date}" 
-                                HorizontalAlignment="Stretch"/>
+                                HorizontalAlignment="Stretch"
+                                KeyDown="CalendarDatePicker_KeyDown"/>
                             <CalendarDatePicker Watermark="End date" 
                                 SelectedDate="{Binding NewEnd_date}" 
-                                HorizontalAlignment="Stretch"/>
+                                HorizontalAlignment="Stretch"
+                                KeyDown="CalendarDatePicker_KeyDown"/>
                         </StackPanel>
                     </Border>
 
@@ -48,7 +50,8 @@
                             <TextBox x:Name="TxtCompetition_number"  Watermark="Competition number" Text="{Binding NewCompetitionNumber}"/>
                             <CalendarDatePicker Watermark="Competition date" 
                                 SelectedDate="{Binding NewCompetitionDate}" 
-                                HorizontalAlignment="Stretch"/>
+                                HorizontalAlignment="Stretch"
+                                KeyDown="CalendarDatePicker_KeyDown"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
