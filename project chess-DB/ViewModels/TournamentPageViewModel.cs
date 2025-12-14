@@ -39,8 +39,8 @@ public partial class TournamentPageViewModel : ViewModelBase
     private string _newName_of_the_tournament { get; set; } = string.Empty;
     private string _newCountry { get; set; } = string.Empty;
     private string _newCity { get; set; } = string.Empty;
-    private string _newStart_date { get; set; } = string.Empty;
-    private string _newEnd_date { get; set; } = string.Empty;
+    private DateTime? _newStart_date;
+    private DateTime? _newEnd_date;
     public string NewName_of_the_tournament
     {
         get => _newName_of_the_tournament;
@@ -56,21 +56,21 @@ public partial class TournamentPageViewModel : ViewModelBase
         get => _newCity;
         set { if (_newCity != value) { _newCity = value; OnPropertyChanged(nameof(NewCity)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
-    public string NewStart_date
+    public DateTime? NewStart_date
     {
         get => _newStart_date;
         set { if (_newStart_date != value) { _newStart_date = value; OnPropertyChanged(nameof(NewStart_date)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
-    public string NewEnd_date
+    public DateTime? NewEnd_date
     {
         get => _newEnd_date;
         set { if (_newEnd_date != value) { _newEnd_date = value; OnPropertyChanged(nameof(NewEnd_date)); (AddTournamentCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
     }
 
 
-    private string _newCompetitionDate { get; set; } = string.Empty;
+    private DateTime? _newCompetitionDate;
     private string _newCompetitionNumber { get; set; } = string.Empty;
-    public string NewCompetitionDate
+    public DateTime? NewCompetitionDate
     {
         get => _newCompetitionDate;
         set { if (_newCompetitionDate != value) { _newCompetitionDate = value; OnPropertyChanged(nameof(NewCompetitionDate)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
@@ -171,29 +171,22 @@ public partial class TournamentPageViewModel : ViewModelBase
     {
         if (tournament == null) return;
 
-        // Sécurité : on s'assure que la liste existe
         if (tournament.RegisteredPlayers == null)
             tournament.RegisteredPlayers = new ObservableCollection<string>();
-
-        // On exécute tout sur le thread UI
         await Dispatcher.UIThread.InvokeAsync(async () =>
         {
-            // 1. Création du ViewModel avec les données du tournoi
+
             var registerVm = new RegisterPlayerViewModel(tournament.RegisteredPlayers);
 
-            // 2. Création de la Vue (Fenêtre)
             var dialog = new RegisterPlayerPageView();
 
-            // 3. IMPORTANT : Lier le ViewModel à la Vue
             dialog.DataContext = registerVm;
 
-            // 4. Afficher la fenêtre
             if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var mainWindow = desktop.MainWindow;
                 if (mainWindow is not null)
                 {
-                    // On attend que la fenêtre se ferme
                     await dialog.ShowDialog(mainWindow);
                 }
             }
@@ -204,17 +197,24 @@ public partial class TournamentPageViewModel : ViewModelBase
         return !string.IsNullOrWhiteSpace(NewName_of_the_tournament) &&
                !string.IsNullOrWhiteSpace(NewCountry) &&
                !string.IsNullOrWhiteSpace(NewCity) &&
-               !string.IsNullOrWhiteSpace(NewStart_date) &&
-               !string.IsNullOrWhiteSpace(NewEnd_date);
+               NewStart_date.HasValue &&
+               NewEnd_date.HasValue;
     }
     private void AddTournament()
     {
+        string startDateStr = NewStart_date.HasValue
+                          ? NewStart_date.Value.ToString("dd/MM/yyyy")
+                          : "";
+
+        string endDateStr = NewEnd_date.HasValue
+                            ? NewEnd_date.Value.ToString("dd/MM/yyyy")
+                            : "";
         var newTournament = new Tournament(
             NewName_of_the_tournament,
             NewCountry,
             NewCity,
-            NewStart_date,
-            NewEnd_date
+            startDateStr,
+            endDateStr
         );
 
         repository.AddTournament(newTournament);
@@ -227,8 +227,8 @@ public partial class TournamentPageViewModel : ViewModelBase
         NewName_of_the_tournament = string.Empty;
         NewCountry = string.Empty;
         NewCity = string.Empty;
-        NewStart_date = string.Empty;
-        NewEnd_date = string.Empty;
+        NewStart_date = null;
+        NewEnd_date = null;
     }
 
     private void DeleteTournament(object? parameter)
@@ -247,7 +247,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     }
     private bool CanAddCompetition()
     {
-        return !string.IsNullOrWhiteSpace(NewCompetitionDate) &&
+        return NewCompetitionDate.HasValue &&
                !string.IsNullOrWhiteSpace(NewCompetitionNumber) &&
                !string.IsNullOrWhiteSpace(NewP1_RegNumber) &&
                !string.IsNullOrWhiteSpace(NewP1_Result) &&
@@ -259,9 +259,11 @@ public partial class TournamentPageViewModel : ViewModelBase
     private void AddCompetition()
     {
         if (SelectedTournament == null) return;
+        string compDateStr = NewCompetitionDate.HasValue
+                       ? NewCompetitionDate.Value.ToString("dd/MM/yyyy") : "";
         var newCompetition = new Competition
         {
-            CompetitionDate = NewCompetitionDate,
+            CompetitionDate = compDateStr,
             CompetitionNumber = NewCompetitionNumber,
             Player1_RegNumber = NewP1_RegNumber,
             Player1_Result = NewP1_Result,
@@ -278,7 +280,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     }
     private void ClearCompetitionForm()
     {
-        NewCompetitionDate = string.Empty;
+        NewCompetitionDate = null;
         NewCompetitionNumber = string.Empty;
 
         // Joueur 1

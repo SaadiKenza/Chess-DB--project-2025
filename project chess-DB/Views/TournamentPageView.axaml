@@ -26,8 +26,12 @@
                             <TextBox x:Name="TxtName_of_the_tournament" Watermark="Name of the tournament" Text="{Binding NewName_of_the_tournament}"/>
                             <TextBox x:Name="TxtCountry" Watermark="Country" Text="{Binding NewCountry}"/>
                             <TextBox x:Name="TxtCity" Watermark="City" Text="{Binding NewCity}"/>
-                            <TextBox Watermark="Start date" Text="{Binding NewStart_date}"/>
-                            <TextBox Watermark="End date" Text="{Binding NewEnd_date}"/>
+                            <CalendarDatePicker Watermark="Start date" 
+                                SelectedDate="{Binding NewStart_date}" 
+                                HorizontalAlignment="Stretch"/>
+                            <CalendarDatePicker Watermark="End date" 
+                                SelectedDate="{Binding NewEnd_date}" 
+                                HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </Border>
 
@@ -42,8 +46,9 @@
                         <StackPanel Spacing="15">
                             <TextBlock Text="Competition Details" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" FontSize="16"/>
                             <TextBox x:Name="TxtCompetition_number"  Watermark="Competition number" Text="{Binding NewCompetitionNumber}"/>
-                            <TextBox Watermark="Competition date" Text="{Binding NewCompetitionDate}"/>
-                            
+                            <CalendarDatePicker Watermark="Competition date" 
+                                SelectedDate="{Binding NewCompetitionDate}" 
+                                HorizontalAlignment="Stretch"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
