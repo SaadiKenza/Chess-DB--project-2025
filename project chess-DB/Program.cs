@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using System;
 using Avalonia.ReactiveUI;
+using project_chess_DB.Services;
 
 namespace project_chess_DB;
 
@@ -10,8 +11,10 @@ sealed class Program
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // yet and stuff might break.
     [STAThread]
-    public static void Main(string[] args) => BuildAvaloniaApp()
-        .StartWithClassicDesktopLifetime(args);
+    public static void Main(string[] args)
+    {
+        DatabaseService.Initialize();
+         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);}
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
