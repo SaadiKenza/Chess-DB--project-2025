@@ -17,14 +17,16 @@ namespace project_chess_DB.Models
         public string Player2_Moves { get; set; } = string.Empty;
         public Competition() { }
 
-        public Competition(string competitionDate,string competitionNumber, string p1Reg, string p1Result, string p2Reg, string p2Result)
+        public Competition(string competitionDate,string competitionNumber, string p1Reg, string p1Result,string p1Moves, string p2Reg, string p2Result, string p2Moves)
         {
             this.CompetitionDate = competitionDate;
             this.CompetitionNumber = competitionNumber;
             this.Player1_RegNumber = p1Reg;
             this.Player1_Result = p1Result;
+            this.Player1_Moves = p1Moves;
             this.Player2_RegNumber = p2Reg;
             this.Player2_Result = p2Result;
+            this.Player2_Moves = p2Moves;
         }
     }
 }
