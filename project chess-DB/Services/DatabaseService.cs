@@ -69,16 +69,14 @@ namespace project_chess_DB.Services
             CompetitionNumber TEXT NOT NULL,
             CompetitionDate TEXT NOT NULL,
             Player1Matricule TEXT NOT NULL,
-            Player2Matricule TEXT NOT NULL,
             Player1Result TEXT,
-            Player2Result TEXT,
             Player1Moves TEXT,
+            Player2Matricule TEXT NOT NULL,
+            Player2Result TEXT,
             Player2Moves TEXT,
 
-            PRIMARY KEY (TournamentName, CompetitionNumber),
-            FOREIGN KEY (TournamentName) REFERENCES Tournaments(Name_of_the_tournament),
-            FOREIGN KEY (Player1Matricule) REFERENCES Players(Matricule),
-            FOREIGN KEY (Player2Matricule) REFERENCES Players(Matricule))";
+            PRIMARY KEY (TournamentName, CompetitionNumber)
+         )";
 
             using var command = connection.CreateCommand();
             command.CommandText = createPlayersTableSql; //execution de la commande sql en haut, pour créer la table
@@ -97,9 +95,7 @@ namespace project_chess_DB.Services
             command7.ExecuteNonQuery();
         }
 
-        /// <summary>
-        /// Renvoie une connexion ouverte (à utiliser dans les repositories).
-        /// </summary>
+
         public static SqliteConnection GetOpenConnection()
         {
             var connection = new SqliteConnection(ConnectionString);
