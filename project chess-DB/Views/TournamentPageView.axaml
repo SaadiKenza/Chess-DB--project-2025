@@ -60,7 +60,7 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Spacing="5">
                                     <TextBlock Text="Player 1" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-                                    <TextBox x:Name="TxtRegistration_number1" Watermark="Registration number" Text="{Binding NewP1_RegNumber}"/>
+                                    <TextBox x:Name="TxtRegistration_number1" Watermark="Matricule" Text="{Binding NewP1_RegNumber}"/>
                                     <ComboBox PlaceholderText="Result" 
                                         SelectedItem="{Binding NewP1_Result}" 
                                         HorizontalAlignment="Stretch">
@@ -72,7 +72,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Spacing="5">
                                     <TextBlock Text="Player 2" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-                                    <TextBox x:Name="TxtRegistration_number2" Watermark="Registration number" Text="{Binding NewP2_RegNumber}"/>
+                                    <TextBox x:Name="TxtRegistration_number2" Watermark="Matricule" Text="{Binding NewP2_RegNumber}"/>
                                     <ComboBox PlaceholderText="Result" 
                                         SelectedItem="{Binding NewP2_Result}" 
                                         HorizontalAlignment="Stretch">

@@ -96,7 +96,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewP1_Result
     {
         get => _newP1_Result;
-        set { if (_newP1_Result != value) { _newP1_Result = value; OnPropertyChanged(nameof(NewP1_Result)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
+        set { if (_newP1_Result != value) { _newP1_Result = value; OnPropertyChanged(nameof(NewP1_Result)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); UpdateOpponentResult(isPlayer1Initiator: true); } }
     }
     public string NewP1_Moves
     {
@@ -114,7 +114,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     public string NewP2_Result
     {
         get => _newP2_Result;
-        set { if (_newP2_Result != value) { _newP2_Result = value; OnPropertyChanged(nameof(NewP2_Result)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); } }
+        set { if (_newP2_Result != value) { _newP2_Result = value; OnPropertyChanged(nameof(NewP2_Result)); (AddCompetitionCommand as RelayCommand2)?.RaiseCanExecuteChanged(); UpdateOpponentResult(isPlayer1Initiator: false); } }
     }
     public string NewP2_Moves
     {
@@ -350,6 +350,49 @@ public partial class TournamentPageViewModel : ViewModelBase
     private void majTournament(Tournament tournament)
     {
         repository.UpdateTournament(tournament);
+    }
+    private void UpdateOpponentResult(bool isPlayer1Initiator)
+    {
+        // On récupère la valeur qui vient d'être changée
+        string currentScore = isPlayer1Initiator ? _newP1_Result : _newP2_Result;
+        string opponentScore = string.Empty;
+
+        // Logique des échecs
+        if (currentScore == "1")
+        {
+            opponentScore = "0";
+        }
+        else if (currentScore == "0")
+        {
+            opponentScore = "1";
+        }
+        else if (currentScore == "0.5")
+        {
+            opponentScore = "0.5";
+        }
+        else
+        {
+            // Si la valeur est vide ou inconnue, on ne fait rien
+            return;
+        }
+
+        // On applique le changement à l'adversaire
+        if (isPlayer1Initiator)
+        {
+            // Si on vient de changer P1, et que P2 est différent de ce qu'il devrait être
+            if (_newP2_Result != opponentScore)
+            {
+                NewP2_Result = opponentScore;
+            }
+        }
+        else
+        {
+            // Si on vient de changer P2, et que P1 est différent de ce qu'il devrait être
+            if (_newP1_Result != opponentScore)
+            {
+                NewP1_Result = opponentScore;
+            }
+        }
     }
 }
 public class RelayCommand2 : ICommand
