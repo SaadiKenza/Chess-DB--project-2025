@@ -35,12 +35,48 @@ namespace project_chess_DB.Services
         public void DeleteTournament(string name_of_the_tournament)
         {
             using var connection = DatabaseService.GetOpenConnection();
-            var sql = @"DELETE FROM Tournaments WHERE Name_of_the_tournament = $name_of_the_tournament";
 
-            using var command5 = connection.CreateCommand();
-            command5.CommandText = sql;
-            command5.Parameters.AddWithValue("$name_of_the_tournament", name_of_the_tournament);
-            command5.ExecuteNonQuery();
+            using var transaction = connection.BeginTransaction();
+
+            try
+            {
+                var sqlDeleteCompetitions = @"DELETE FROM Competitions WHERE TournamentName = $name";
+
+                using (var commandComp = connection.CreateCommand())
+                {
+                    commandComp.Transaction = transaction;
+                    commandComp.CommandText = sqlDeleteCompetitions;
+                    commandComp.Parameters.AddWithValue("$name", name_of_the_tournament);
+                    commandComp.ExecuteNonQuery();
+                }
+
+                var sqlDeletePlayers = @"DELETE FROM TournamentPlayers WHERE TournamentName = $name";
+
+                using (var commandPlayers = connection.CreateCommand())
+                {
+                    commandPlayers.Transaction = transaction;
+                    commandPlayers.CommandText = sqlDeletePlayers;
+                    commandPlayers.Parameters.AddWithValue("$name", name_of_the_tournament);
+                    commandPlayers.ExecuteNonQuery();
+                }
+
+                var sqlDeleteTournament = @"DELETE FROM Tournaments WHERE Name_of_the_tournament = $name";
+
+                using (var commandTourn = connection.CreateCommand())
+                {
+                    commandTourn.Transaction = transaction;
+                    commandTourn.CommandText = sqlDeleteTournament;
+                    commandTourn.Parameters.AddWithValue("$name", name_of_the_tournament);
+                    commandTourn.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void UpdateTournament(Tournament tournament)
         {
@@ -105,7 +141,7 @@ namespace project_chess_DB.Services
                 {
                     return dt.ToString("dd/MM/yyyy");
                 }
-                return parts[0]; 
+                return parts[0];
             }
             if (DateTime.TryParse(input, out DateTime date))
             {
