@@ -40,12 +40,50 @@ namespace project_chess_DB.Services
         public void DeletePlayer(string matricule)
         {
             using var connection = DatabaseService.GetOpenConnection();
-            var sql = @"DELETE FROM Players WHERE Matricule = $matricule";
+            using var transaction = connection.BeginTransaction();
 
-            using var command3 = connection.CreateCommand();
-            command3.CommandText = sql;
-            command3.Parameters.AddWithValue("$matricule", matricule);
-            command3.ExecuteNonQuery();
+            try                                                                 //on supprime le joueur de la liste de compétitions vu qu'il aurait pu etre inscrit
+            {
+                var sqlDeleteMatches = @"                               
+                    DELETE FROM Competitions 
+                    WHERE Player1Matricule = $matricule 
+                    OR Player2Matricule = $matricule";
+
+                using (var commandMatches = connection.CreateCommand())
+                {
+                    commandMatches.Transaction = transaction;
+                    commandMatches.CommandText = sqlDeleteMatches;
+                    commandMatches.Parameters.AddWithValue("$matricule", matricule);
+                    commandMatches.ExecuteNonQuery();
+                }
+
+                var sqlDeleteRegistrations = @"DELETE FROM TournamentPlayers WHERE PlayerMatricule = $matricule";
+
+                using (var commandReg = connection.CreateCommand())
+                {
+                    commandReg.Transaction = transaction;
+                    commandReg.CommandText = sqlDeleteRegistrations;
+                    commandReg.Parameters.AddWithValue("$matricule", matricule);
+                    commandReg.ExecuteNonQuery();
+                }
+
+                var sqlDeletePlayer = @"DELETE FROM Players WHERE Matricule = $matricule";              //vu que le joueur a été supprimer de toute les autres base de données, on peut maintenant le supprimer du tableau de players
+
+                using (var commandPlayer = connection.CreateCommand())
+                {
+                    commandPlayer.Transaction = transaction;
+                    commandPlayer.CommandText = sqlDeletePlayer;
+                    commandPlayer.Parameters.AddWithValue("$matricule", matricule);
+                    commandPlayer.ExecuteNonQuery();
+                }
+
+                transaction.Commit();       //on valide nos changements
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();     //en cas d'erreur
+                throw;
+            }
         }
 
         //pour pouvoir modifier les coordonnées d'un player
