@@ -27,6 +27,11 @@ public partial class TournamentPageViewModel : ViewModelBase
             if (_selectedTournament != value)
             {
                 _selectedTournament = value;
+                if (_selectedTournament != null)
+                {
+                    var competitionsFromDb = CompetitionRepository.GetCompetitionsForTournament(_selectedTournament.Name_of_the_tournament);
+                    _selectedTournament.Competitions = new ObservableCollection<Competition>(competitionsFromDb);
+                }
                 OnPropertyChanged(nameof(SelectedTournament));
                 OnPropertyChanged(nameof(Competitions));
             }
@@ -122,6 +127,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     public ICommand AddCompetitionCommand { get; }
 
     private TournamentRepository repository;
+    private CompetitionRepository CompetitionRepository;
     private List<Tournament> _allTournaments;
     private string _searchText = string.Empty;
     public string SearchText
@@ -141,6 +147,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     public TournamentPageViewModel()
     {
         repository = new TournamentRepository();
+        CompetitionRepository = new CompetitionRepository();
         _allTournaments = repository.GetAllTournaments();
         Tournaments = new ObservableCollection<Tournament>(_allTournaments);
 
@@ -272,8 +279,20 @@ public partial class TournamentPageViewModel : ViewModelBase
             Player2_Result = NewP2_Result,
             Player2_Moves = NewP2_Moves
         };
+        bool isSaved = CompetitionRepository.AddCompetition(SelectedTournament.Name_of_the_tournament, newCompetition);
 
-        SelectedTournament.Competitions.Add(newCompetition);
+        // 2. Si la sauvegarde a réussi, alors on ajoute à l'écran
+        if (isSaved)
+        {
+            SelectedTournament.Competitions.Add(newCompetition);
+            OnPropertyChanged(nameof(Competitions)); // Rafraîchir la vue
+            ClearCompetitionForm();
+        }
+        else
+        {
+            // Optionnel : Tu pourrais afficher un message d'erreur ici si ça échoue
+            System.Diagnostics.Debug.WriteLine("Erreur lors de la sauvegarde en BDD");
+        }
 
         OnPropertyChanged(nameof(Competitions));
         ClearCompetitionForm();

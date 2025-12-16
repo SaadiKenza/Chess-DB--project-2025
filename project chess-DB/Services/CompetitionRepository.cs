@@ -6,7 +6,7 @@ namespace project_chess_DB.Services
 {
     public class CompetitionRepository
     {
-    
+
         public List<Competition> GetCompetitionsForTournament(string tournamentName)
         {
             var competitions = new List<Competition>();
@@ -29,7 +29,7 @@ namespace project_chess_DB.Services
             while (reader.Read())
             {
                 var competition = new Competition(
-                
+
                 reader.GetString(0),
                 reader.GetString(1),
                 reader.GetString(2),
@@ -39,6 +39,7 @@ namespace project_chess_DB.Services
                 reader.GetString(6),
                 reader.GetString(7)
                 );
+                competitions.Add(competition);
             }
 
 
