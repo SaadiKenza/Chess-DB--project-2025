@@ -120,8 +120,43 @@ namespace project_chess_DB.Services
             var count = Convert.ToInt32(command.ExecuteScalar());
             return count > 0;
         }
+        public Player? GetPlayerByMatricule(string matricule)
+        {
+            using var connection = DatabaseService.GetOpenConnection();
+            using var command = connection.CreateCommand();
+
+
+            command.CommandText = "SELECT * FROM Players WHERE Matricule = @m";
+            command.Parameters.AddWithValue("@m", matricule);
+
+            using var reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                return new Player(
+                    reader["Matricule"].ToString() ?? string.Empty,
+                    reader["Last_name"].ToString() ?? string.Empty,
+                    reader["First_name"].ToString() ?? string.Empty,
+                    reader["Age"].ToString() ?? string.Empty,
+                    reader["Elo"].ToString() ?? string.Empty,
+                    reader["Country"].ToString() ?? string.Empty,
+                    reader["Mail"].ToString() ?? string.Empty,
+                    reader["Phone_number"].ToString() ?? string.Empty
+                );
+            }
+            return null;
+        }
+        public void UpdatePlayerElo(string matricule, int newElo)
+        {
+            using var connection = DatabaseService.GetOpenConnection();
+            using var command = connection.CreateCommand();
+
+            command.CommandText = "UPDATE Players SET Elo = @elo WHERE Matricule = @m";
+            command.Parameters.AddWithValue("@elo", newElo);
+            command.Parameters.AddWithValue("@m", matricule);
+
+            command.ExecuteNonQuery();
+        }
     }
-    // Dans project_chess_DB.Services.PlayerRepository
 }
 
 

@@ -128,6 +128,7 @@ public partial class TournamentPageViewModel : ViewModelBase
 
     private TournamentRepository repository;
     private CompetitionRepository CompetitionRepository;
+    private PlayerRepository _playerRepository;
     private List<Tournament> _allTournaments;
     private string _searchText = string.Empty;
     public string SearchText
@@ -148,6 +149,7 @@ public partial class TournamentPageViewModel : ViewModelBase
     {
         repository = new TournamentRepository();
         CompetitionRepository = new CompetitionRepository();
+        _playerRepository = new PlayerRepository();
         _allTournaments = repository.GetAllTournaments();
         Tournaments = new ObservableCollection<Tournament>(_allTournaments);
 
@@ -284,6 +286,14 @@ public partial class TournamentPageViewModel : ViewModelBase
         // 2. Si la sauvegarde a réussi, alors on ajoute à l'écran
         if (isSaved)
         {
+            try
+            {
+                UpdateEloForPlayers(NewP1_RegNumber, NewP1_Result, NewP2_RegNumber, NewP2_Result);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erreur calcul ELO: {ex.Message}");
+            }
             SelectedTournament.Competitions.Add(newCompetition);
             OnPropertyChanged(nameof(Competitions)); // Rafraîchir la vue
             ClearCompetitionForm();
@@ -296,6 +306,30 @@ public partial class TournamentPageViewModel : ViewModelBase
 
         OnPropertyChanged(nameof(Competitions));
         ClearCompetitionForm();
+    }
+    private void UpdateEloForPlayers(string p1Matricule, string p1ResultStr, string p2Matricule, string p2ResultStr)
+    {
+        // 1. Récupérer les joueurs
+        var player1 = _playerRepository.GetPlayerByMatricule(p1Matricule);
+        var player2 = _playerRepository.GetPlayerByMatricule(p2Matricule);
+
+        if (player1 == null || player2 == null) return;
+
+        if (!double.TryParse(p1ResultStr.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double p1Score)) return;
+        if (!double.TryParse(p2ResultStr.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double p2Score)) return;
+
+        int elo1 = 0;
+        int elo2 = 0;
+        int.TryParse(player1.Elo, out elo1);
+        int.TryParse(player2.Elo, out elo2);
+
+        int newEloP1 = EloCalculator.CalculateNewRating(elo1, elo2, p1Score);
+        int newEloP2 = EloCalculator.CalculateNewRating(elo2, elo1, p2Score);
+
+        _playerRepository.UpdatePlayerElo(player1.Matricule, newEloP1);
+        _playerRepository.UpdatePlayerElo(player2.Matricule, newEloP2);
+
+        System.Diagnostics.Debug.WriteLine($"ELO Update: P1 {elo1}->{newEloP1}, P2 {elo2}->{newEloP2}");
     }
     private void ClearCompetitionForm()
     {
