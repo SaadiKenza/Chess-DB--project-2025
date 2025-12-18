@@ -58,7 +58,11 @@ Prenons l'exemple de la fenêtre *Player* et gestion des joueurs. Chaque fichier
 
 Chaque fichier a une responsabilité définie. On ne mélange pas les différentes actions si elles n'ont pas de même rôle. 
 <br>
-Le deuxième principe est le
+Le deuxième principe est le *Open/Closed Principle*. <br>
+Avec ce principe, on doit pouvoir ajouter un nouveau bout de code sans que l'ancien ne soit modifié. 
+Grâce au principe *Single Responsibility Principle* et à l'architecture MVVM, chaque fichier ne s'occupe que d'un seul rôle et permet de facilement ajouter du code sans casser l'existant.
+Par exemple, après la création de la table *Players* dans la base de données, la fonctionnalité supprimer a pu être ajoutée. Celle-ci a pu être implémentée dans le fichier *PlayerRepository.cs* sans apporter de modifications du code déjà existant. <br>
+De plus, si l'on souhaite ajouter une nouvelle fenêtre, créer les fichiers MVVM ainsi que la base de données ne modifie pas les pages existantes.
 
 ## Conclusion:
 
