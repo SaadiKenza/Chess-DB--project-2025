@@ -47,7 +47,22 @@ Par exemple, si l'on veut modifier une informations personnelles d'un joueur ou 
 
 ## Principes SOLID utilisés:
 
+Le premier principe utilisé est le *Single Responsibility Principle*. <br>
+Ce principe stipule que chaque classe ne doit avoir qu'une seule responsabilité. Notre projet respecte bien ce principe puisque chaque rôle est attribué à un seul fichier.
+Ce principe a brièvement été justifié dans la section *Architecture et fonctionnement général*. <br>
+Prenons l'exemple de la fenêtre *Player* et gestion des joueurs. Chaque fichier, de même dossier ou différent, joue un rôle propre :
+- Dans *Models*, *Player.Cs" donne la structure de création d'un joueur. C'est la façon dont il est représenté dans le projet.
+- Dans *Views*, on a deux fichiers : *PlayerPageView.axaml* qui gère l'UI de la page *Player* et *PlayerPageView.axaml.cs* qui gère ses interactions avec l'utilisateur (quoi faire lorsqu'on apporte une modification à un tableau ou un clic par exemple).
+- Dans *ViewModels*, le fichier *PlayerPageViewModel.cs" a le rôle d'intermédiaire entre l'UI de la page *Player* et sa base de données.
+- Dans *Services*, le fichier *PlayerRepository.cs* contient tous les actions a réaliser dans la table *Players* de la base des données (AddPlayer, DeletePlayer, UpdatePlayerElo, etc.).
+
+Chaque fichier a une responsabilité définie. On ne mélange pas les différentes actions si elles n'ont pas de même rôle. 
+<br>
+Le deuxième principe est le
+
 ## Conclusion:
+
+
 
 
 
