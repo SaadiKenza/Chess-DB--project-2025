@@ -1,3 +1,9 @@
+## Etudiantes:
+
+- Saadi Kenza :23268
+- Umme Kulsum :22156
+
+
 # Projet_2025_Chess_DB
 
 Le but du projet est de réaliser une application desktop de gestion de matchs d'une fédération d'échecs.<br>
@@ -6,18 +12,30 @@ Dans cette application, on retrouve trois fenêtres : <br>
 2. *Player* : pour la gestion des joueurs (inscription, modification des informations ainsi que la suppression d'un joueur)<br>
 3. *Tournament* : contient une partie de gestion de tournois (création, modification et suppression des tournois) et une partie d'ajout de compétitions.<br>
 Pour pouvoir ajouter un joueur dans un tournoi, on clique sur le bouton jaune et une petite fenêtre apparait. Sur celle-ci, on insére le matricule du joueur qui participe au tournoi et on voit la liste des matricules des joueurs déjà inscrit. On dispose aussi d'une barre de recherche pour faciliter la gestion des joueurs inscrits.<br>
-Pour pouvoir ajouter une compétition, il faut d'abord sélectionner le tournois ou a été joué la compétition. En sélectionnant un tournoi, la liste des compétitions apparait.<br>
+Pour pouvoir ajouter une compétition, il faut d'abord sélectionner le tournois où a été joué la compétition. En sélectionnant un tournoi, la liste des compétitions apparait.<br>
 
 Le projet a été réalisé en ¨*C#* avec une base de données en *SQLite* ainsi qu'une interface graphique *Avalonia UI*.
-  
 
 
-## Etudiantes:
+## Architecture et fonctionnement général
 
-- Saadi Kenza :23268
-- Umme Kulsum :22156
-  
+On retrouve dans le projet un modèle *MVVM* :
+- *Models* : fichiers qui servent d'empreinte, de structure des différents entités du projet.
+- *Views* : fichiers qui représentent les différentes fenêtres de l'application. Elles gérent l'affichage (".axaml") et l'interaction avec l'utilisateur (".axaml.cs").
+- *ViewsModels* : fichiers qui font le lien entre les interactions depuis l'UI et les données (SQLite).
+
+On y retrouve aussi un dossier *Services* qui contient les différents fichiers qui servent à la base de données. Chaque fichier a une responsabilité, ne gère qu'une tache. Par exemple, le fichier *DatabaseService.cs* gère la création des différentes tables de la base de données.
+
+Le fonctionnement est le suivant: 
+L'utilisateur insére quelque chose depuis l'UI. Le fichier *View* conserné transmet cette information au *ViewModel* approprié et celui-ci va à son tour trasmettre cette information au fichier *Service* correspondant pour effectuer les changements dans la base de données. <br>
+Une fois le changement dans la base de données effectué, on fait le chemin inverse pour afficher les modifications apportés.
+
 ## Description de la fonctionnalité supplémentaire:
+
+La fonctionnalité supplémentaire que l'on va décrire est la barre de recherche. Il y en a une dans *Player*, une dans *Tournament* et une dans la petite fenêtre secondaire d'ajout d'un joueur à un tournoi. <br>
+Cette barre sert à filtrer les tableaux de données pour faciliter la gestion. Il est à noter que la recherche ne se fait que par la clé primaire du tableau : le matricule pour les joueurs et le nom du tournoi pour les tournois. <br>
+Par exemple, si l'on veut modifier une informations personnelles d'un joueur ou le supprimer, on n'a qu'à le rechercher par son matricule dans la barre de recherche. Cela rend l'utilisation de l'application plus dynamique et la gestion plus facile et rapide.
+
 
 ## Diagramme de classes:
 
