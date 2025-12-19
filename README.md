@@ -67,6 +67,8 @@ Par exemple, remplacer le mode de calculs des scores (propres à chaque sport) e
 
 
 ## Diagramme de séquences:
+<img width="1329" height="805" alt="image" src="https://github.com/user-attachments/assets/dc6587fc-b890-41a9-8df9-684b8afba366" />
+
 
 ## Diagramme d'activité:
 
