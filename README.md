@@ -9,7 +9,7 @@
 Le but du projet est de réaliser une application desktop de gestion de matchs d'une fédération d'échecs.<br>
 Dans cette application, on retrouve trois fenêtres : <br>
 1. Le *Dashboard* : la page d'accueil du gestionnaire<br>
-2. *Player* : pour la gestion des joueurs (inscription, modification des informations ainsi que la suppression d'un joueur)<br>
+2. *Player* : pour la gestion des joueurs (inscription, modification des informations ainsi que la suppression d'un joueur). Il est a noté que la colonne *Elo* du tableau fait apparaitre une flèche, au survol permettant de classer les joueurs dans l'odre croissant ou décroissant, de faire un classement Elo. <br>
 3. *Tournament* : contient une partie de gestion de tournois (création, modification et suppression des tournois) et une partie d'ajout de compétitions.<br>
 Pour pouvoir ajouter un joueur dans un tournoi, on clique sur le bouton jaune et une petite fenêtre apparait. Sur celle-ci, on insére le matricule du joueur qui participe au tournoi et on voit la liste des matricules des joueurs déjà inscrit. On dispose aussi d'une barre de recherche pour faciliter la gestion des joueurs inscrits.<br>
 Pour pouvoir ajouter une compétition, il faut d'abord sélectionner le tournois où a été joué la compétition. En sélectionnant un tournoi, la liste des compétitions apparait.<br>
@@ -37,14 +37,6 @@ Cette barre sert à filtrer les tableaux de données pour faciliter la gestion. 
 Par exemple, si l'on veut modifier une informations personnelles d'un joueur ou le supprimer, on n'a qu'à le rechercher par son matricule dans la barre de recherche. Cela rend l'utilisation de l'application plus dynamique et la gestion plus facile et rapide.
 
 
-## Diagramme de classes:
-
-## Diagramme de séquences:
-
-## Diagramme d'activité:
-
-## Qualité d'adaptabilité de notre projet:
-
 ## Principes SOLID utilisés:
 
 Le premier principe utilisé est le *Single Responsibility Principle*. <br>
@@ -56,15 +48,30 @@ Prenons l'exemple de la fenêtre *Player* et gestion des joueurs. Chaque fichier
 - Dans *ViewModels*, le fichier *PlayerPageViewModel.cs" a le rôle d'intermédiaire entre l'UI de la page *Player* et sa base de données.
 - Dans *Services*, le fichier *PlayerRepository.cs* contient tous les actions a réaliser dans la table *Players* de la base des données (AddPlayer, DeletePlayer, UpdatePlayerElo, etc.).
 
-Chaque fichier a une responsabilité définie. On ne mélange pas les différentes actions si elles n'ont pas de même rôle. 
-<br>
+Chaque fichier a une responsabilité définie. On ne mélange pas les différentes actions si elles n'ont pas de même rôle. <br>
+
 Le deuxième principe est le *Open/Closed Principle*. <br>
 Avec ce principe, on doit pouvoir ajouter un nouveau bout de code sans que l'ancien ne soit modifié. 
 Grâce au principe *Single Responsibility Principle* et à l'architecture MVVM, chaque fichier ne s'occupe que d'un seul rôle et permet de facilement ajouter du code sans casser l'existant.
 Par exemple, après la création de la table *Players* dans la base de données, la fonctionnalité supprimer a pu être ajoutée. Celle-ci a pu être implémentée dans le fichier *PlayerRepository.cs* sans apporter de modifications du code déjà existant. <br>
 De plus, si l'on souhaite ajouter une nouvelle fenêtre, créer les fichiers MVVM ainsi que la base de données ne modifie pas les pages existantes.
 
+## Qualité d'adaptabilité à une autre fédération:
+
+Le projet a été réalisé de manière à pouvoir être adapté à d'autres fédérations sportives.
+L'UI repose sur des concepts communs à nombreuses fédérations : inscription de joueurs, création de tournois, les compétitions. La structure générale de l'UI peut donc être conservée, avec quelques adaptations. 
+Par exemple, remplacer le mode de calculs des scores (propres à chaque sport) est réalisable facilement grâce à l'indépendance des fichiers. En effet, comme chaque fichier a une responsabilité propre, il suffit d'aller changer le mode de calculs dans le fichier correspondant sans que ca n'impacte toute l'architecture. 
+
+## Diagramme de classes:
+
+## Diagramme de séquences:
+
+## Diagramme d'activité:
+
+
 ## Conclusion:
+
+
 
 
 
