@@ -1,4 +1,4 @@
-## Etudiantes:
+## Étudiantes
 
 - Saadi Kenza :23268
 - Umme Kulsum :22156
@@ -14,7 +14,7 @@ Dans cette application, on retrouve trois fenêtres : <br>
 Pour pouvoir ajouter un joueur dans un tournoi, on clique sur le bouton jaune et une petite fenêtre apparait. Sur celle-ci, on insére le matricule du joueur qui participe au tournoi et on voit la liste des matricules des joueurs déjà inscrit. On dispose aussi d'une barre de recherche pour faciliter la gestion des joueurs inscrits.<br>
 Pour pouvoir ajouter une compétition, il faut d'abord sélectionner le tournois où a été joué la compétition. En sélectionnant un tournoi, la liste des compétitions apparait.<br>
 
-Le projet a été réalisé en ¨*C#* avec une base de données en *SQLite* ainsi qu'une interface graphique *Avalonia UI*.
+Le projet a été réalisé en *C#* avec une base de données en *SQLite* ainsi qu'une interface graphique *Avalonia UI*.
 
 
 ## Architecture et fonctionnement général
@@ -30,14 +30,15 @@ Le fonctionnement est le suivant:
 L'utilisateur insére quelque chose depuis l'UI. Le fichier *View* concerné transmet cette information au *ViewModel* approprié et celui-ci va à son tour trasmettre cette information au fichier *Service* correspondant pour effectuer les changements dans la base de données. <br>
 Une fois le changement dans la base de données effectué, on fait le chemin inverse pour afficher les modifications apportés.
 
-## Description de la fonctionnalité supplémentaire:
+
+## Description de la fonctionnalité supplémentaire
 
 La fonctionnalité supplémentaire que l'on va décrire est la barre de recherche. Il y en a une dans *Player*, une dans *Tournament* et une dans la petite fenêtre secondaire d'ajout d'un joueur à un tournoi. <br>
 Cette barre sert à filtrer les tableaux de données pour faciliter la gestion. Il est à noter que la recherche ne se fait que par la clé primaire du tableau : le matricule pour les joueurs et le nom du tournoi pour les tournois. <br>
 Par exemple, si l'on veut modifier une informations personnelles d'un joueur ou le supprimer, on n'a qu'à le rechercher par son matricule dans la barre de recherche. Cela rend l'utilisation de l'application plus dynamique et la gestion plus facile et rapide.
 
 
-## Principes SOLID utilisés:
+## Principes SOLID utilisés
 
 Le premier principe utilisé est le *Single Responsibility Principle*. <br>
 Ce principe stipule que chaque classe ne doit avoir qu'une seule responsabilité. Notre projet respecte bien ce principe puisque chaque rôle est attribué à un seul fichier.
@@ -56,28 +57,31 @@ Grâce au principe *Single Responsibility Principle* et à l'architecture MVVM, 
 Par exemple, après la création de la table *Players* dans la base de données, la fonctionnalité supprimer a pu être ajoutée. Celle-ci a pu être implémentée dans le fichier *PlayerRepository.cs* sans apporter de modifications du code déjà existant. <br>
 De plus, si l'on souhaite ajouter une nouvelle fenêtre, créer les fichiers MVVM ainsi que la base de données ne modifie pas les pages existantes.
 
-## Qualité d'adaptabilité à une autre fédération:
+
+## Qualité d'adaptabilité à une autre fédération
 
 Le projet a été réalisé de manière à pouvoir être adapté à d'autres fédérations sportives.
 L'UI repose sur des concepts communs à nombreuses fédérations : inscription de joueurs, création de tournois, les compétitions. La structure générale de l'UI peut donc être conservée, avec quelques adaptations. 
 Par exemple, remplacer le mode de calculs des scores (propres à chaque sport) est réalisable facilement grâce à l'indépendance des fichiers. En effet, comme chaque fichier a une responsabilité propre, il suffit d'aller changer le mode de calculs dans le fichier correspondant sans que ca n'impacte toute l'architecture. 
 
-## Diagramme de classes:
+
+## Diagramme de classes
 <img width="1240" height="610" alt="image" src="https://github.com/user-attachments/assets/ba5c02f1-2eaa-4bbb-bf47-7a50da259f2b" />
 
 
-## Diagramme de séquences:
+## Diagramme de séquences
 Pour l'inscription d'un joueur à la féderation :
 
 <img width="1329" height="805" alt="image" src="https://github.com/user-attachments/assets/dc6587fc-b890-41a9-8df9-684b8afba366" />
 
 
-## Diagramme d'activité:
+## Diagramme d'activité
 Pour l'inscription d'un joueur à un tournoi :
+
 <img width="1133" height="882" alt="image" src="https://github.com/user-attachments/assets/efa64045-f724-4d3f-af1e-20ef8fe774cb" />
 
 
-## Conclusion:
+## Conclusion
 
 Ce projet avait pour objectif de concevoir une application Desktop permettant la gestion d'une fédération d'échecs. L'ensemble des critères du cahier des charges ont bien été respecté. <br>
 L'architecture *MVVM* ainsi les deux principes *SOLID* utilisés ont permis d'obtenir un code clair et structuré, dans lequel les fichiers ne possède qu'une seule reponsabilité. Ceci facilite la gestion du projet et permet de l'adapter à d'autres fédérations.<br>
