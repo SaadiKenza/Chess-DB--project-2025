@@ -24,10 +24,10 @@ On retrouve dans le projet un modèle *MVVM* :
 - *Views* : fichiers qui représentent les différentes fenêtres de l'application. Elles gérent l'affichage (".axaml") et l'interaction avec l'utilisateur (".axaml.cs").
 - *ViewsModels* : fichiers qui font le lien entre les interactions depuis l'UI et les données (SQLite).
 
-On y retrouve aussi un dossier *Services* qui contient les différents fichiers qui servent à la base de données. Chaque fichier a une responsabilité, ne gère qu'une tache. Par exemple, le fichier *DatabaseService.cs* gère la création des différentes tables de la base de données.
+On y retrouve aussi un dossier *Services* qui contient les différents fichiers qui servent à la base de données. Chaque fichier a une responsabilité, ne gère qu'une tâche. Par exemple, le fichier *DatabaseService.cs* gère la création des différentes tables de la base de données.
 
 Le fonctionnement est le suivant: 
-L'utilisateur insére quelque chose depuis l'UI. Le fichier *View* conserné transmet cette information au *ViewModel* approprié et celui-ci va à son tour trasmettre cette information au fichier *Service* correspondant pour effectuer les changements dans la base de données. <br>
+L'utilisateur insére quelque chose depuis l'UI. Le fichier *View* concerné transmet cette information au *ViewModel* approprié et celui-ci va à son tour trasmettre cette information au fichier *Service* correspondant pour effectuer les changements dans la base de données. <br>
 Une fois le changement dans la base de données effectué, on fait le chemin inverse pour afficher les modifications apportés.
 
 ## Description de la fonctionnalité supplémentaire:
@@ -67,14 +67,21 @@ Par exemple, remplacer le mode de calculs des scores (propres à chaque sport) e
 
 
 ## Diagramme de séquences:
+Pour l'inscription d'un joueur à la féderation :
+
 <img width="1329" height="805" alt="image" src="https://github.com/user-attachments/assets/dc6587fc-b890-41a9-8df9-684b8afba366" />
 
 
 ## Diagramme d'activité:
+Pour l'inscription d'un joueur à un tournoi :
+<img width="1133" height="882" alt="image" src="https://github.com/user-attachments/assets/efa64045-f724-4d3f-af1e-20ef8fe774cb" />
 
 
 ## Conclusion:
 
+Ce projet avait pour objectif de concevoir une application Desktop permettant la gestion d'une fédération d'échecs. L'ensemble des critères du cahier des charges ont bien été respecté. <br>
+L'architecture *MVVM* ainsi les deux principes *SOLID* utilisés ont permis d'obtenir un code clair et structuré, dans lequel les fichiers ne possède qu'une seule reponsabilité. Ceci facilite la gestion du projet et permet de l'adapter à d'autres fédérations.<br>
+Côté utilisateur, l'ajout de la barre de recherche permet une gestion plus dynamique et efficace. L'UI est intuitive, facile d'utilisation afin de garantir une expérience optimale.
 
 
 
