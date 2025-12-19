@@ -4,7 +4,7 @@
 - Umme Kulsum :22156
 
 
-# Projet_2025_Chess_DB
+## Projet_2025_Chess_DB
 
 Le but du projet est de réaliser une application desktop de gestion de matchs d'une fédération d'échecs.<br>
 Dans cette application, on retrouve trois fenêtres : <br>
@@ -46,7 +46,7 @@ Prenons l'exemple de la fenêtre *Player* et gestion des joueurs. Chaque fichier
 - Dans *Models*, *Player.Cs" donne la structure de création d'un joueur. C'est la façon dont il est représenté dans le projet.
 - Dans *Views*, on a deux fichiers : *PlayerPageView.axaml* qui gère l'UI de la page *Player* et *PlayerPageView.axaml.cs* qui gère ses interactions avec l'utilisateur (quoi faire lorsqu'on apporte une modification à un tableau ou un clic par exemple).
 - Dans *ViewModels*, le fichier *PlayerPageViewModel.cs" a le rôle d'intermédiaire entre l'UI de la page *Player* et sa base de données.
-- Dans *Services*, le fichier *PlayerRepository.cs* contient tous les actions a réaliser dans la table *Players* de la base des données (AddPlayer, DeletePlayer, UpdatePlayerElo, etc.).
+- Dans *Services*, le fichier *PlayerRepository.cs* contient tous les actions a réaliser dans la table *Players* de la base des données (AddPlayer, DeletePlayer, UpdatePlayerElo, etc.).<br>
 
 Chaque fichier a une responsabilité définie. On ne mélange pas les différentes actions si elles n'ont pas de même rôle. <br>
 
@@ -63,6 +63,8 @@ L'UI repose sur des concepts communs à nombreuses fédérations : inscription d
 Par exemple, remplacer le mode de calculs des scores (propres à chaque sport) est réalisable facilement grâce à l'indépendance des fichiers. En effet, comme chaque fichier a une responsabilité propre, il suffit d'aller changer le mode de calculs dans le fichier correspondant sans que ca n'impacte toute l'architecture. 
 
 ## Diagramme de classes:
+<img width="1240" height="610" alt="image" src="https://github.com/user-attachments/assets/ba5c02f1-2eaa-4bbb-bf47-7a50da259f2b" />
+
 
 ## Diagramme de séquences:
 
